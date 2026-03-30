@@ -1,0 +1,47 @@
+{
+  "lineEnds": {
+    "leftCurly": "after",
+    "emptyCurly": "noBreak",
+    "objectLiteralCurly": {
+      "leftCurly": "after"
+    }
+  },
+  "sameLine": {
+    "anonFunctionBody": "next",
+    "doWhile": "next",
+    "tryBody": "keep",
+    "tryCatch": "keep"
+  },
+  "whitespace": {
+    "colonPolicy": "after",
+    "caseColonPolicy": "after",
+    "objectFieldColonPolicy": "after",
+    "typeHintColonPolicy": "after",
+    "typeCheckColonPolicy": "after",
+    "typeParamOpenPolicy": "none",
+    "typeParamClosePolicy": "none"
+  },
+  "emptyLines": {
+    "finalNewline": true,
+    "lineCommentsBetweenFunctions": "keep"
+  },
+  "wrapping": {
+    "arrayWrap": {
+      "defaultWrap": "onePerLine"
+    },
+    "callParameter": {
+      "defaultWrap": "keep",
+      "rules": [
+        {
+          "conditions": [
+            {
+              "cond": "exceedsMaxLineLength",
+              "value": 1
+            }
+          ],
+          "type": "onePerLine"
+        }
+      ]
+    }
+  }
+}

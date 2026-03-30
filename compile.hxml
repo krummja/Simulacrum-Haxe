@@ -1,0 +1,6 @@
+-cp src
+-lib heaps
+-lib hldx
+-lib bits
+-hl build/hl/simulacrum.hl
+-main Main
