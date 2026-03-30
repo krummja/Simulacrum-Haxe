@@ -39,7 +39,10 @@ class Main extends hxd.App {
 
 	public override function init(): Void {
 		s2d.renderer.globals.set("screenH", 800);
-		s2d.renderer.globals.set("time", 0);
+		s2d.renderer.globals.set("time", 0.0);
+		s2d.renderer.globals.set("warp", 0.0);
+		s2d.renderer.globals.set("vignetteIntensity", 0.0);
+		s2d.renderer.globals.set("vignetteOpacity", 0.00);
 
 		Commands.init();
 

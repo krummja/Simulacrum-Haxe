@@ -1,4 +1,5 @@
 -cp src
+--macro macros.ResourceMacros.init()
 -lib heaps
 -lib hldx
 -lib bits

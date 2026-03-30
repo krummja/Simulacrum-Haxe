@@ -1,5 +1,7 @@
 package core;
 
+import h2d.Bitmap;
+import h2d.filter.DropShadow;
 import h2d.filter.Shader;
 import h2d.filter.Group;
 import h2d.filter.Blur;
@@ -19,9 +21,9 @@ enum RenderLayerType {
 
 class RenderLayerManager {
 	public var root(default, null): h2d.Layers;
-	public var background(default, null): h2d.Layers;
 	public var scroller(default, null): h2d.Layers;
 	public var screen(default, null): h2d.Layers;
+	public var background: h2d.Bitmap;
 
 	private var scrollerCount: Int = 0;
 	private var screenCount: Int = 0;
@@ -29,7 +31,11 @@ class RenderLayerManager {
 
 	public function new() {
 		this.root = new h2d.Layers();
-		this.background = new h2d.Layers();
+
+		this.background = new h2d.Bitmap(h2d.Tile.fromColor(0x505050));
+		this.background.width = 10000;
+		this.background.height = 10000;
+
 		this.scroller = new h2d.Layers();
 		this.screen = new h2d.Layers();
 		this.layers = new Map();
@@ -47,8 +53,8 @@ class RenderLayerManager {
 		this.root.addChildAt(scroller, 1);
 		this.root.addChildAt(screen, 2);
 
-		var blurShader = new Blur();
 		var scanlineShader = new Shader(new ScanlineShader());
+		var blurShader = new Blur();
 
 		var postprocess = new Group([
 			scanlineShader,
@@ -56,7 +62,7 @@ class RenderLayerManager {
 		]);
 
 		scanlineShader.enable = true;
-		blurShader.enable = false;
+		blurShader.enable = true;
 		postprocess.enable = true;
 
 		this.root.filter = postprocess;
