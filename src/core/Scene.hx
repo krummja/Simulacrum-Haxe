@@ -40,7 +40,7 @@ abstract class Scene {
 	private function onKeyDown(key: KeyCode): Void {}
 
 	private function get_loop(): MainLoop {
-		return MainLoop.instance;
+		return MainLoop.getInstance();
 	}
 
 	// private function get_world(): World

@@ -8,7 +8,7 @@ import core.InputDomainType;
 class Commands {
 	public static var values: Array<Command>;
 
-	public static function Init() {
+	public static function init() {
 		values = new Array();
 
         // @formatter:off
@@ -30,7 +30,7 @@ class Commands {
         // @formatter:on
 	}
 
-	public static function GetForDomain(domains: Array<InputDomainType>): Array<Command> {
+	public static function getForDomain(domains: Array<InputDomainType>): Array<Command> {
 		return values.filter((c) -> domains.has(c.domain));
 	}
 

@@ -22,7 +22,7 @@ class SceneManager {
 			this.scenes.pop().onClosedListener();
 		}
 
-		MainLoop.instance.input.flush();
+		MainLoop.getInstance().input.flush();
 		this.scenes.push(scene);
 		current.onEnter();
 	}
@@ -30,14 +30,14 @@ class SceneManager {
 	public function replace(scene: Scene) {
 		current.onDestroy();
 		this.scenes.pop().onClosedListener();
-		MainLoop.instance.input.flush();
+		MainLoop.getInstance().input.flush();
 		this.scenes.push(scene);
 		current.onEnter();
 	}
 
 	public function push(scene: Scene) {
 		current.onSuspend();
-		MainLoop.instance.input.flush();
+		MainLoop.getInstance().input.flush();
 		this.scenes.push(scene);
 		current.onEnter();
 	}
@@ -45,16 +45,20 @@ class SceneManager {
 	public function pop() {
 		current.onDestroy();
 		this.scenes.pop().onClosedListener();
-		MainLoop.instance.input.flush();
+		MainLoop.getInstance().input.flush();
 		current.onResume();
 	}
 
 	private function get_current(): Scene {
-		return this.scenes[this.scenes.length - 1];
+		return this.scenes[
+			this.scenes.length - 1
+		];
 	}
 
 	private function get_previous(): Scene {
-		return this.scenes[this.scenes.length - 2];
+		return this.scenes[
+			this.scenes.length - 2
+		];
 	}
 
 	private function get_domain(): InputDomainType {

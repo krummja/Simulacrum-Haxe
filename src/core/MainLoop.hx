@@ -1,30 +1,67 @@
 package core;
 
+import core.RenderLayerManager.RenderLayerType;
+
 class MainLoop {
-	public static var instance: MainLoop;
+	private static var instance: MainLoop;
 
-	public var app(default, null): hxd.App;
-	public var window(get, never): hxd.Window;
+	public static function getInstance(): MainLoop {
+		return instance;
+	}
 
-	public var frame(default, null): Frame;
-	public var scenes(default, null): SceneManager;
-	public var input(default, null): InputManager;
-	public var commands(default, null): CommandManager;
-
-	public static function Create(app: hxd.App): MainLoop {
+	/**
+	 * If no instance already exists, create a new `MainLoop`, initializing all attached
+	 * managers and systems. Otherwise, return the existing `MainLoop` singleton.
+	 */
+	public static function create(app: hxd.App): MainLoop {
 		if (instance != null)
 			return instance;
 		return new MainLoop(app);
 	}
 
+	/**
+	 * Heaps App instance passed during construction.
+	 */
+	public var app(default, null): hxd.App;
+
+	/**
+	 * Heaps Window singleton instance, accessed via `hxd.Window.getInstance()`.
+	 */
+	public var window(get, never): hxd.Window;
+
+	public var frame(default, null): Frame;
+
+	public var scenes(default, null): SceneManager;
+
+	public var input(default, null): InputManager;
+
+	public var commands(default, null): CommandManager;
+
+	public var layers(default, null): RenderLayerManager;
+
 	public function new(app: hxd.App) {
 		instance = this;
 		this.app = app;
 
+		this.frame = new Frame();
+		this.scenes = new SceneManager();
 		this.input = new InputManager();
+		this.commands = new CommandManager();
+		this.layers = new RenderLayerManager();
+
+		this.app.s2d.scaleMode = Fixed(800, 600, 1, Left, Top);
+		this.app.s2d.addChild(this.layers.root);
 	}
 
-	public inline function update(dt: Float): Void {}
+	public inline function update(dt: Float): Void {
+		app.s2d.renderer.globals.set("time", frame.elapsed);
+		this.frame.update();
+		this.scenes.current.update(this.frame);
+	}
+
+	public inline function render(layer: RenderLayerType, ob: h2d.Object): Void {
+		return this.layers.render(layer, ob);
+	}
 
 	private function get_window(): hxd.Window {
 		return hxd.Window.getInstance();

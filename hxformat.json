@@ -10,7 +10,8 @@
     "anonFunctionBody": "next",
     "doWhile": "next",
     "tryBody": "keep",
-    "tryCatch": "keep"
+    "tryCatch": "keep",
+    "ifBody": "keep"
   },
   "whitespace": {
     "colonPolicy": "after",

@@ -17,7 +17,7 @@ class InputManager {
 		this.queue = new Queue(4);
 		this.mouse = new Coordinate(0, 0, SCREEN);
 
-		MainLoop.instance.window.addEventTarget(this.onSceneEvent);
+		MainLoop.getInstance().window.addEventTarget(this.onSceneEvent);
 	}
 
 	public inline function next(): Null<KeyEvent> {
@@ -65,17 +65,17 @@ class InputManager {
 			case EMove:
 				var previous = mouse;
 				mouse = new Coordinate(event.relX, event.relY, SCREEN);
-				MainLoop.instance.scenes.current.onMouseMove(mouse, previous);
+				MainLoop.getInstance().scenes.current.onMouseMove(mouse, previous);
 			case EKeyUp:
 				this.setModKeys(event.keyCode, KEY_UP);
 			case EKeyDown:
 				this.setModKeys(event.keyCode, KEY_DOWN);
 				this.handleKeyEvent(event.keyCode, KEY_DOWN);
-				MainLoop.instance.scenes.current.onKeyDown(event.keyCode);
+				MainLoop.getInstance().scenes.current.onKeyDown(event.keyCode);
 			case EPush:
-				MainLoop.instance.scenes.current.onMouseDown(new Coordinate(event.relX, event.relY, SCREEN));
+				MainLoop.getInstance().scenes.current.onMouseDown(new Coordinate(event.relX, event.relY, SCREEN));
 			case ERelease:
-				MainLoop.instance.scenes.current.onMouseUp(new Coordinate(event.relX, event.relY, SCREEN));
+				MainLoop.getInstance().scenes.current.onMouseUp(new Coordinate(event.relX, event.relY, SCREEN));
 			case _:
 		}
 	}
