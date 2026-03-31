@@ -1,7 +1,6 @@
 package core;
 
 import h2d.Bitmap;
-import h2d.filter.DropShadow;
 import h2d.filter.Shader;
 import h2d.filter.Group;
 import h2d.filter.Blur;
@@ -30,6 +29,8 @@ class RenderLayerManager {
 	private var layers: Map<RenderLayerType, RenderLayer>;
 
 	public function new() {
+		trace("Setting up Render Layers");
+
 		this.root = new h2d.Layers();
 
 		this.background = new h2d.Bitmap(h2d.Tile.fromColor(0x505050));
@@ -49,17 +50,14 @@ class RenderLayerManager {
 		this.createLayer(HUD, SCREEN);
 		this.createLayer(POPUP, SCREEN);
 
-		this.root.addChildAt(background, 0);
-		this.root.addChildAt(scroller, 1);
-		this.root.addChildAt(screen, 2);
+		this.root.addChildAt(this.background, 0);
+		this.root.addChildAt(this.scroller, 1);
+		this.root.addChildAt(this.screen, 2);
 
 		var scanlineShader = new Shader(new ScanlineShader());
 		var blurShader = new Blur();
 
-		var postprocess = new Group([
-			scanlineShader,
-			blurShader,
-		]);
+		var postprocess = new Group([scanlineShader, blurShader]);
 
 		scanlineShader.enable = true;
 		blurShader.enable = true;

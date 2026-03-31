@@ -1,6 +1,7 @@
 package core;
 
 import core.RenderLayerManager.RenderLayerType;
+import echoes.Echoes;
 
 class MainLoop {
 	private static var instance: MainLoop;
@@ -44,13 +45,15 @@ class MainLoop {
 		this.app = app;
 
 		this.frame = new Frame();
-		this.scenes = new SceneManager();
+		this.layers = new RenderLayerManager();
 		this.input = new InputManager();
 		this.commands = new CommandManager();
-		this.layers = new RenderLayerManager();
+		this.scenes = new SceneManager();
 
 		this.app.s2d.scaleMode = Fixed(800, 600, 1, Left, Top);
 		this.app.s2d.addChild(this.layers.root);
+
+		Echoes.init();
 	}
 
 	public inline function update(dt: Float): Void {

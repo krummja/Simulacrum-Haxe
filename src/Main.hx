@@ -2,6 +2,7 @@ import hxd.Res;
 import common.util.MathLib;
 import core.MainLoop;
 import data.Commands;
+import data.TileResources;
 import data.scenes.TestScene;
 
 class Debug {
@@ -44,6 +45,7 @@ class Main extends hxd.App {
 		s2d.renderer.globals.set("vignetteIntensity", 0.0);
 		s2d.renderer.globals.set("vignetteOpacity", 0.00);
 
+		TileResources.init();
 		Commands.init();
 
 		var window = hxd.Window.getInstance();

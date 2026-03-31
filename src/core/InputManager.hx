@@ -68,6 +68,8 @@ class InputManager {
 				MainLoop.getInstance().scenes.current.onMouseMove(mouse, previous);
 			case EKeyUp:
 				this.setModKeys(event.keyCode, KEY_UP);
+				this.handleKeyEvent(event.keyCode, KEY_UP);
+				MainLoop.getInstance().scenes.current.onKeyUp(event.keyCode);
 			case EKeyDown:
 				this.setModKeys(event.keyCode, KEY_DOWN);
 				this.handleKeyEvent(event.keyCode, KEY_DOWN);

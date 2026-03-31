@@ -39,6 +39,9 @@ abstract class Scene {
 	@:allow(core.InputManager)
 	private function onKeyDown(key: KeyCode): Void {}
 
+	@:allow(core.InputManager)
+	private function onKeyUp(key: KeyCode): Void {}
+
 	private function get_loop(): MainLoop {
 		return MainLoop.getInstance();
 	}

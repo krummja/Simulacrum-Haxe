@@ -3,5 +3,6 @@
 -lib heaps
 -lib hldx
 -lib bits
+-lib echoes
 -hl build/hl/simulacrum.hl
 -main Main
