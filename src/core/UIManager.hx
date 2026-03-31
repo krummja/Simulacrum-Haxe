@@ -32,20 +32,18 @@ import haxe.ui.data.*;
 </box>
 ')
 class HUDComponent extends Box {
-	public var hp: Int = 100;
-
 	public function new() {
 		super();
-		textfield.text = 'HP: ${hp}';
+		textfield.text = 'HP: ${UIManager.hp}';
 
 		deinc.onClick = function(e) {
-			textfield.text = 'HP: ${hp}';
-			hp -= 1;
+			UIManager.hp -= 1;
+			textfield.text = 'HP: ${UIManager.hp}';
 		}
 
 		inc.onClick = function(e) {
-			textfield.text = 'HP: ${hp}';
-			hp += 1;
+			UIManager.hp += 1;
+			textfield.text = 'HP: ${UIManager.hp}';
 		}
 
 		for (i in 0...10) {
@@ -58,16 +56,33 @@ class HUDComponent extends Box {
 	}
 }
 
+@:xml('
+<vbox width="100%" height="100%" style="padding: 10px">
+	<hbox id="wrapper" width="100%" height="100%">
+		<box id="rootInner" width="100%" height="100%" style="padding: 5px; background-color: #b41c2b">
+		</box>
+	</hbox>
+</vbox>
+')
+class UIRoot extends Box {
+	public function new(width: Float, height: Float) {
+		super();
+		wrapper.width = width;
+		wrapper.height = height;
+	}
+}
+
 class UIManager {
 	public var loop(default, null): MainLoop;
 
-	public var hud(default, null): HUDComponent;
+	public static var ui_root: UIRoot;
+	public static var hp: Int = 100;
 
 	public function new(loop: MainLoop) {
 		this.loop = loop;
 		Toolkit.init({root: this.loop.layers.root});
 
-		this.hud = new HUDComponent();
-		this.loop.layers.render(HUD, this.hud);
+		UIManager.ui_root = new UIRoot(this.loop.window.width, this.loop.window.height);
+		this.loop.layers.render(HUD, UIManager.ui_root);
 	}
 }

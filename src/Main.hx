@@ -36,8 +36,7 @@ class Main extends hxd.App {
 	 */
 	private var loop: MainLoop;
 
-	private var debug: Debug;
-
+	// private var debug: Debug;
 	// public static var hud: HUDComponent;
 
 	public override function init(): Void {
@@ -61,11 +60,11 @@ class Main extends hxd.App {
 		this.loop = MainLoop.create(this);
 		this.loop.scenes.set(new TestScene());
 
-		this.debug = new Debug(this.loop);
+		// this.debug = new Debug(this.loop);
 	}
 
 	public override function update(dt: Float): Void {
 		this.loop.update(dt);
-		this.debug.update();
+		// this.debug.update();
 	}
 }
