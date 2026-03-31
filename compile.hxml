@@ -1,6 +1,9 @@
 -cp src
 --macro macros.ResourceMacros.init()
 -lib heaps
+-lib domkit
+-lib haxeui-core
+-lib haxeui-heaps
 -lib hldx
 -lib bits
 -lib echoes

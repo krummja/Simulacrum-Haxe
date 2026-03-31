@@ -38,8 +38,9 @@ class Main extends hxd.App {
 
 	private var debug: Debug;
 
+	// public static var hud: HUDComponent;
+
 	public override function init(): Void {
-		s2d.renderer.globals.set("screenH", 800);
 		s2d.renderer.globals.set("time", 0.0);
 		s2d.renderer.globals.set("warp", 0.0);
 		s2d.renderer.globals.set("vignetteIntensity", 0.0);
@@ -49,6 +50,9 @@ class Main extends hxd.App {
 		Commands.init();
 
 		var window = hxd.Window.getInstance();
+
+		s2d.renderer.globals.set("screenH", window.height);
+
 		window.title = "Simulacrum";
 		window.addResizeEvent(() -> {
 			s2d.renderer.globals.set("screenH", window.height);

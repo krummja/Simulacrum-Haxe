@@ -14,22 +14,11 @@ class RenderSystem extends System {
 		this.scene = scene;
 	}
 
-	@:add private function onPositionAdded(position: Position): Void {
-		trace("Position added");
-	}
-
-	@:remove private function onPositionRemoved(position: Position): Void {
-		trace("Position removed");
-	}
-
 	@:add private function onDisplayAdded(display: Sprite): Void {
-		trace("Sprite added");
-		trace(display.drawable);
 		this.scene.loop.render(OBJECT, display.drawable);
 	}
 
 	@:remove private function onDisplayRemoved(display: Sprite): Void {
-		trace("Sprite removed");
 		display.drawable.remove();
 	}
 

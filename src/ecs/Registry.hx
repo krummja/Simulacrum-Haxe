@@ -1,3 +1,0 @@
-package ecs;
-
-class Registry {}

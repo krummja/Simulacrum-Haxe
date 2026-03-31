@@ -30,7 +30,7 @@ class MainLoop {
 	 */
 	public var window(get, never): hxd.Window;
 
-	public var frame(default, null): Frame;
+	public var frame(default, null): core.Frame;
 
 	public var scenes(default, null): SceneManager;
 
@@ -40,15 +40,19 @@ class MainLoop {
 
 	public var layers(default, null): RenderLayerManager;
 
+	public var ui(default, null): UIManager;
+
 	public function new(app: hxd.App) {
 		instance = this;
 		this.app = app;
 
-		this.frame = new Frame();
+		this.frame = new core.Frame();
 		this.layers = new RenderLayerManager();
 		this.input = new InputManager();
 		this.commands = new CommandManager();
-		this.scenes = new SceneManager();
+
+		this.scenes = new SceneManager(this);
+		this.ui = new UIManager(this);
 
 		this.app.s2d.scaleMode = Fixed(800, 600, 1, Left, Top);
 		this.app.s2d.addChild(this.layers.root);

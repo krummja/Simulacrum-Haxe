@@ -11,7 +11,8 @@ class SceneManager {
 
 	private var scenes: Array<Scene>;
 
-	public function new() {
+	public function new(loop: MainLoop) {
+		this.loop = loop;
 		this.scenes = new Array();
 		this.scenes.push(new EmptyScene());
 	}
@@ -50,15 +51,11 @@ class SceneManager {
 	}
 
 	private function get_current(): Scene {
-		return this.scenes[
-			this.scenes.length - 1
-		];
+		return this.scenes[this.scenes.length - 1];
 	}
 
 	private function get_previous(): Scene {
-		return this.scenes[
-			this.scenes.length - 2
-		];
+		return this.scenes[this.scenes.length - 2];
 	}
 
 	private function get_domain(): InputDomainType {
