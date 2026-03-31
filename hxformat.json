@@ -27,9 +27,6 @@
     "lineCommentsBetweenFunctions": "keep"
   },
   "wrapping": {
-    "arrayWrap": {
-      "defaultWrap": "onePerLine"
-    },
     "callParameter": {
       "defaultWrap": "keep",
       "rules": [

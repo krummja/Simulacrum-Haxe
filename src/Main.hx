@@ -20,7 +20,7 @@ class Debug {
 		this.fpsText.textAlign = Left;
 		this.fpsText.x = 4;
 		this.fpsText.y = 4;
-		this.fpsText.text = 'FPS: ${MathLib.pretty(this.loop.frame.fps, 2)}';
+		this.fpsText.text = 'FPS: ${MathLib.pretty(this.loop.frame.smoothFps, 0)}';
 	}
 }
 

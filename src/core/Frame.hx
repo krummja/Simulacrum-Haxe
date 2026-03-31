@@ -11,6 +11,10 @@ class Frame {
 	 */
 	public var fps(get, null): Float;
 
+	public var smoothFps(get, null): Float;
+
+	public var frameTimes(default, null): Array<Float> = [];
+
 	/**
 	 * Modifier that shows real FPS relative to desired FPS. This allows
 	 * for the game to be frame-rate independent. Use this whenever moving
@@ -39,6 +43,11 @@ class Frame {
 	private function update() {
 		tick++;
 		elapsed += dt;
+
+		frameTimes.push(dt);
+		if (frameTimes.length > 50) {
+			frameTimes.shift();
+		}
 	}
 
 	private function get_dt(): Float {
@@ -47,6 +56,14 @@ class Frame {
 
 	private function get_fps(): Float {
 		return hxd.Timer.fps();
+	}
+
+	private function get_smoothFps(): Float {
+		var totalTime: Float = 0.0;
+		for (i in 0...frameTimes.length) {
+			totalTime += frameTimes[i];
+		}
+		return frameTimes.length / totalTime;
 	}
 
 	private function get_tmod(): Float {
