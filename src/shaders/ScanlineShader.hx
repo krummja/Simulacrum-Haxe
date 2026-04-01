@@ -36,6 +36,35 @@ class ScanlineShader extends ScreenShader {
 			return pow(vign, vignetteIntensity * vignetteOpacity);
 		}
 
+		function randomUV(uv: Vec2): Vec2 {
+			uv = vec2(
+				dot(uv, vec2(127.1, 311.7)),
+				dot(uv, vec2(269.5, 183.3))
+			);
+
+			return -1.0 + 2.0 * fract(sin(uv) * 43758.5353123);
+		}
+
+		function noiseDistort(uv: Vec2): Float {
+			var uv_index: Vec2 = floor(uv);
+			var uv_fract: Vec2 = fract(uv);
+			var blur: Vec2 = smoothstep(0.0, 1.0, uv_fract);
+
+			return mix(
+				mix(
+					dot(randomUV(uv_index + vec2(0.0, 0.0)), uv_fract - vec2(0.0, 0.0)),
+					dot(randomUV(uv_index + vec2(1.0, 0.0)), uv_fract - vec2(1.0, 0.0)),
+					blur.x
+				),
+				mix(
+					dot(randomUV(uv_index + vec2(0.0, 1.0)), uv_fract - vec2(0.0, 1.0)),
+					dot(randomUV(uv_index + vec2(1.0, 1.0)), uv_fract - vec2(1.0, 1.0)),
+					blur.x
+				),
+				blur.y
+			) * 0.5 + 0.5;
+		}
+
 		function fragment() {
 			var pi = 3.14159265;
 			var blurSize = 0.15;
@@ -47,6 +76,7 @@ class ScanlineShader extends ScreenShader {
 			var border = vec4(0.0, 0.0, 0.0, 0.0);
 			var blur = vec4(0.0, 0.0, 0.0, 0.0);
 			var vignette = vec4(0.0, 0.0, 0.0, 0.0);
+			var rollUV = vec2(0.0);
 			var uv = calculatedUV;
 			uv = warpCalc(uv);
 
@@ -69,7 +99,7 @@ class ScanlineShader extends ScreenShader {
 			// vignette.rgb *= vignetteCalc(uv);
 
 			var vPos = calculatedUV.y * screenH;
-			var r = fract(sin(dot(calculatedUV * time, vec2(12.9898, 78.233))) * 43758.5453);
+			// var r = fract(sin(dot(calculatedUV * time, vec2(12.9898, 78.233))) * 43758.5453);
 			var lineIntensity = (subtleLevel) + abs(cos(pi / scanlineSize * vPos));
 
 			var amt = clamp(lineIntensity, 0.0, 1.125);

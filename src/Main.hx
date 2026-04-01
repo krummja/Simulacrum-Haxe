@@ -1,3 +1,4 @@
+import data.TextResources;
 import hxd.Res;
 import common.util.MathLib;
 import core.MainLoop;
@@ -36,15 +37,13 @@ class Main extends hxd.App {
 	 */
 	private var loop: MainLoop;
 
-	// private var debug: Debug;
-	// public static var hud: HUDComponent;
-
 	public override function init(): Void {
 		s2d.renderer.globals.set("time", 0.0);
-		s2d.renderer.globals.set("warp", 0.0);
-		s2d.renderer.globals.set("vignetteIntensity", 0.0);
-		s2d.renderer.globals.set("vignetteOpacity", 0.00);
+		s2d.renderer.globals.set("warp", 0.1);
+		s2d.renderer.globals.set("vignetteIntensity", 0.1);
+		s2d.renderer.globals.set("vignetteOpacity", 0.01);
 
+		TextResources.init();
 		TileResources.init();
 		Commands.init();
 
@@ -59,12 +58,10 @@ class Main extends hxd.App {
 
 		this.loop = MainLoop.create(this);
 		this.loop.scenes.set(new TestScene());
-
-		// this.debug = new Debug(this.loop);
 	}
 
 	public override function update(dt: Float): Void {
+		s2d.renderer.globals.set("time", this.loop.frame.elapsed);
 		this.loop.update(dt);
-		// this.debug.update();
 	}
 }

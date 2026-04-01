@@ -22,7 +22,7 @@ class RenderLayerManager {
 	public var root(default, null): h2d.Layers;
 	public var scroller(default, null): h2d.Layers;
 	public var screen(default, null): h2d.Layers;
-	public var background: h2d.Bitmap;
+	public var underlay: h2d.Bitmap;
 
 	private var scrollerCount: Int = 0;
 	private var screenCount: Int = 0;
@@ -33,24 +33,28 @@ class RenderLayerManager {
 
 		this.root = new h2d.Layers();
 
-		this.background = new h2d.Bitmap(h2d.Tile.fromColor(0x505050));
-		this.background.width = 10000;
-		this.background.height = 10000;
+		this.underlay = new h2d.Bitmap(h2d.Tile.fromColor(0x505050));
+		this.underlay.width = 10000;
+		this.underlay.height = 10000;
 
 		this.scroller = new h2d.Layers();
 		this.screen = new h2d.Layers();
+
 		this.layers = new Map();
 
+		// World Layers
 		this.createLayer(BACKGROUND, WORLD);
 		this.createLayer(GROUND, WORLD);
 		this.createLayer(OBJECT, WORLD);
 		this.createLayer(ACTOR, WORLD);
 		this.createLayer(EFFECT, WORLD);
 		this.createLayer(OVERLAY, WORLD);
+
+		// Screen Layers
 		this.createLayer(HUD, SCREEN);
 		this.createLayer(POPUP, SCREEN);
 
-		this.root.addChildAt(this.background, 0);
+		this.root.addChildAt(this.underlay, 0);
 		this.root.addChildAt(this.scroller, 1);
 		this.root.addChildAt(this.screen, 2);
 
@@ -60,7 +64,7 @@ class RenderLayerManager {
 		var postprocess = new Group([scanlineShader, blurShader]);
 
 		scanlineShader.enable = true;
-		blurShader.enable = true;
+		blurShader.enable = false;
 		postprocess.enable = true;
 
 		this.root.filter = postprocess;

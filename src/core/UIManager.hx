@@ -59,7 +59,7 @@ class HUDComponent extends Box {
 @:xml('
 <vbox width="100%" height="100%" style="padding: 10px">
 	<hbox id="wrapper" width="100%" height="100%">
-		<box id="rootInner" width="100%" height="100%" style="padding: 5px; background-color: #b41c2b">
+		<box id="rootInner" width="100%" height="100%" style="padding: 5px; background-color: #1a1a1a; opacity: 0.5;">
 		</box>
 	</hbox>
 </vbox>
@@ -75,6 +75,7 @@ class UIRoot extends Box {
 class UIManager {
 	public var loop(default, null): MainLoop;
 
+	public static var overlay_root: UIRoot;
 	public static var ui_root: UIRoot;
 	public static var hp: Int = 100;
 

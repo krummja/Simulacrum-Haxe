@@ -1,5 +1,7 @@
 package core;
 
+import data.TextResources;
+import h2d.Console;
 import core.RenderLayerManager.RenderLayerType;
 import echoes.Echoes;
 
@@ -40,6 +42,8 @@ class MainLoop {
 
 	public var layers(default, null): RenderLayerManager;
 
+	public var console(default, null): Console;
+
 	public var ui(default, null): UIManager;
 
 	public function new(app: hxd.App) {
@@ -53,6 +57,9 @@ class MainLoop {
 
 		this.scenes = new SceneManager(this);
 		this.ui = new UIManager(this);
+
+		this.console = new Console(TextResources.BIZCAT);
+		ConsoleConfig.config(this.console);
 
 		this.app.s2d.scaleMode = Fixed(800, 600, 1, Left, Top);
 		this.app.s2d.addChild(this.layers.root);

@@ -1,5 +1,6 @@
 package data.scenes;
 
+import core.Command;
 import echoes.View;
 import h3d.Vector;
 import data.components.Position;
@@ -39,33 +40,40 @@ class TestScene extends Scene {
 		positionView = renderSystem.getLinkedView(Position);
 	}
 
-	private override function onKeyDown(key: KeyCode): Void {
-		switch (key) {
-			case KEY_W:
-				direction.y = -1;
-			case KEY_A:
-				direction.x = -1;
-			case KEY_S:
-				direction.y = 1;
-			case KEY_D:
-				direction.x = 1;
+	private function handleInput(command: Command) {
+		switch (command.type) {
+			case CMD_CONSOLE:
+				loop.scenes.push(new Console());
 			case _:
 		}
 	}
 
-	private override function onKeyUp(key: KeyCode): Void {
-		switch (key) {
-			case KEY_W:
-				direction.y = 0;
-			case KEY_S:
-				direction.y = 0;
-			case KEY_A:
-				direction.x = 0;
-			case KEY_D:
-				direction.x = 0;
-			case _:
-		}
-	}
+	// private override function onKeyDown(key: KeyCode): Void {
+	// 	switch (key) {
+	// 		case KEY_W:
+	// 			direction.y = -1;
+	// 		case KEY_A:
+	// 			direction.x = -1;
+	// 		case KEY_S:
+	// 			direction.y = 1;
+	// 		case KEY_D:
+	// 			direction.x = 1;
+	// 		case _:
+	// 	}
+	// }
+	// private override function onKeyUp(key: KeyCode): Void {
+	// 	switch (key) {
+	// 		case KEY_W:
+	// 			direction.y = 0;
+	// 		case KEY_S:
+	// 			direction.y = 0;
+	// 		case KEY_A:
+	// 			direction.x = 0;
+	// 		case KEY_D:
+	// 			direction.x = 0;
+	// 		case _:
+	// 	}
+	// }
 
 	private override function update(frame: Frame): Void {
 		title.textAlign = Center;
@@ -79,6 +87,11 @@ class TestScene extends Scene {
 			position.x += direction.x * 200 * frame.dt;
 			position.y += direction.y * 200 * frame.dt;
 		});
+
+		var cmd = loop.commands.peek();
+		if (cmd != null) {
+			handleInput(loop.commands.next());
+		}
 	}
 
 	private override function onDestroy(): Void {
