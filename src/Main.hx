@@ -1,34 +1,14 @@
-import data.TextResources;
+import core.SettingsManager;
 import hxd.Res;
-import common.util.MathLib;
 import core.MainLoop;
 import data.Commands;
 import data.TileResources;
+import data.TextResources;
 import data.scenes.TestScene;
-
-class Debug {
-	private var loop: MainLoop;
-	private var fpsText: h2d.Text;
-
-	public function new(loop: MainLoop) {
-		this.loop = loop;
-		this.fpsText = new h2d.Text(hxd.Res.fnt.bizcat.toFont());
-		this.fpsText.setScale(1);
-		this.loop.render(HUD, this.fpsText);
-	}
-
-	@:allow(Main)
-	private function update(): Void {
-		this.fpsText.textAlign = Left;
-		this.fpsText.x = 4;
-		this.fpsText.y = 4;
-		this.fpsText.text = 'FPS: ${MathLib.pretty(this.loop.frame.smoothFps, 0)}';
-	}
-}
 
 class Main extends hxd.App {
 	public static function main(): Void {
-		Res.initEmbed();
+		Res.initLocal();
 		new Main();
 	}
 
@@ -38,6 +18,9 @@ class Main extends hxd.App {
 	private var loop: MainLoop;
 
 	public override function init(): Void {
+		var settingsManager = new SettingsManager("settings_test");
+		trace(settingsManager.settings);
+
 		s2d.renderer.globals.set("time", 0.0);
 		s2d.renderer.globals.set("warp", 0.1);
 		s2d.renderer.globals.set("vignetteIntensity", 0.1);
@@ -51,7 +34,7 @@ class Main extends hxd.App {
 
 		s2d.renderer.globals.set("screenH", window.height);
 
-		window.title = "Simulacrum";
+		window.title = settingsManager.settings.application.title;
 		window.addResizeEvent(() -> {
 			s2d.renderer.globals.set("screenH", window.height);
 		});

@@ -51,6 +51,7 @@ class MainLoop {
 		this.app = app;
 
 		this.frame = new core.Frame();
+
 		this.layers = new RenderLayerManager();
 		this.input = new InputManager();
 		this.commands = new CommandManager();

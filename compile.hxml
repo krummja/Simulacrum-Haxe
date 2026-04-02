@@ -4,6 +4,7 @@
 -lib domkit
 -lib haxeui-core
 -lib haxeui-heaps
+-lib json2object
 -lib hldx
 -lib bits
 -lib echoes
