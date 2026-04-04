@@ -11,8 +11,9 @@
 	},
 	"display": {
 		"fullScreen": false,
-		"resolutionHeight": 800,
-		"resolutionWidth": 1200
+		"resolutionWidth": 1440,
+		"resolutionHeight": 900,
+		"scanlines": false
 	},
 	"graphics": {
 		"vsyncEnabled": true

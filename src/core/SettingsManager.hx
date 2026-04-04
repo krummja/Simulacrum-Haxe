@@ -13,6 +13,8 @@ typedef DisplaySettings = {
 	resolutionWidth: Int,
 	resolutionHeight: Int,
 	fullScreen: Bool,
+	scanlines: Bool,
+	warpAmount: Float,
 }
 
 typedef GraphicsSettings = {
@@ -38,36 +40,36 @@ typedef Settings = {
 }
 
 class SettingsManager {
-	public var settings(default, null): Settings;
+	public static var settings(default, null): Settings;
 
-	private var settingsDirectory: String = "settings";
+	private static var settingsDirectory: String = "settings";
 
-	public function new(fileName: String) {
+	public static function init(fileName: String) {
 		if (!FileSystem.exists(settingsDirectory)) {
 			FileSystem.createDirectory(settingsDirectory);
 		}
 
 		if (!FileSystem.exists(FS.filePath([settingsDirectory, '${fileName}.json']))) {
-			loadDefaults();
-			writeSettings('${fileName}.json');
+			SettingsManager.loadDefaults();
+			SettingsManager.writeSettings('${fileName}.json');
 		}
 
-		readSettings('${fileName}.json');
+		SettingsManager.readSettings('${fileName}.json');
 	}
 
-	private function readSettings(name: String) {
+	private static function readSettings(name: String) {
 		var fileData = File.getContent(FS.filePath([settingsDirectory, name]));
 		var errors = new Array<json2object.Error>();
 		settings = new json2object.JsonParser<Settings>(errors).fromJson(fileData, name);
 	}
 
-	private function writeSettings(name: String) {
+	private static function writeSettings(name: String) {
 		var settingsData = Json.stringify(settings, "\t");
 		File.saveContent(FS.filePath([settingsDirectory, name]), settingsData);
 	}
 
-	private function loadDefaults() {
-		settings = {
+	private static function loadDefaults() {
+		SettingsManager.settings = {
 			application: {
 				title: "",
 			},
@@ -75,6 +77,8 @@ class SettingsManager {
 				resolutionWidth: 1200,
 				resolutionHeight: 800,
 				fullScreen: false,
+				scanlines: true,
+				warpAmount: 0.1,
 			},
 			graphics: {
 				vsyncEnabled: true,

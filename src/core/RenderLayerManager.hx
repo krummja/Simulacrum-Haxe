@@ -29,8 +29,6 @@ class RenderLayerManager {
 	private var layers: Map<RenderLayerType, RenderLayer>;
 
 	public function new() {
-		trace("Setting up Render Layers");
-
 		this.root = new h2d.Layers();
 
 		this.underlay = new h2d.Bitmap(h2d.Tile.fromColor(0x505050));
@@ -65,10 +63,10 @@ class RenderLayerManager {
 
 		scanlineShader.enable = true;
 		blurShader.enable = false;
-		postprocess.enable = true;
+		postprocess.enable = SettingsManager.settings.display.scanlines;
 
 		this.root.filter = postprocess;
-		this.root.filter.enable = true;
+		this.root.filter.enable = SettingsManager.settings.display.scanlines;
 	}
 
 	public function createLayer(type: RenderLayerType, space: RenderLayerSpace): RenderLayer {

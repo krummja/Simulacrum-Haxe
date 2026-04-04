@@ -62,7 +62,10 @@ class MainLoop {
 		this.console = new Console(TextResources.BIZCAT);
 		ConsoleConfig.config(this.console);
 
-		this.app.s2d.scaleMode = Fixed(800, 600, 1, Left, Top);
+		var screenWidth = SettingsManager.settings.display.resolutionWidth;
+		var screenHeight = SettingsManager.settings.display.resolutionHeight;
+
+		this.app.s2d.scaleMode = Fixed(screenWidth, screenHeight, 1, Left, Top);
 		this.app.s2d.addChild(this.layers.root);
 
 		Echoes.init();
@@ -72,6 +75,7 @@ class MainLoop {
 		app.s2d.renderer.globals.set("time", frame.elapsed);
 		this.frame.update();
 		this.scenes.current.update(this.frame);
+		this.ui.update(this.frame);
 	}
 
 	public inline function render(layer: RenderLayerType, ob: h2d.Object): Void {
