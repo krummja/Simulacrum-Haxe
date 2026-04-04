@@ -13,6 +13,8 @@ class TestScene extends Scene {
 		switch (command.type) {
 			case CMD_CONSOLE:
 				loop.scenes.push(new Console());
+			case CMD_CANCEL:
+				loop.scenes.push(new SettingsScene());
 			case _:
 		}
 	}
