@@ -1,0 +1,46 @@
+<vbox width="100%" height="100%" style="padding: 8px;">
+    <style>
+        .container {
+            width: 100%;
+            height: 100%;
+            padding: 8px;
+            background-color: #212121;
+            background-opacity: 1.0;
+            border-radius: 4px;
+        }
+
+        .debug {
+            border: 1px solid #ff0000;
+        }
+
+        .text {
+            color: #ffffff;
+        }
+
+        .section {
+            color: #ffffff;
+        }
+
+        .bottomBar {
+            border: 1px solid #00ff00;
+            padding: 4px;
+        }
+
+        .buttonGroup {
+            padding: 4px;
+            border: 1px solid #ff00ff;
+        }
+    </style>
+    <vbox id="rootContainer" styleName="container debug">
+        <vbox styleName="debug" width="100%">
+            <section-header styleName="section" text="General"/>
+        </vbox>
+        <vbox height="100%" width="100%" styleName="debug"/>
+        <vbox styleName="bottomBar" width="100%">
+            <hbox styleName="buttonGroup" horizontalAlign="right">
+                <button id="returnButton" text="Return"/>
+                <button id="saveButton" text="Save"/>
+            </hbox>
+        </vbox>
+    </vbox>
+</vbox>

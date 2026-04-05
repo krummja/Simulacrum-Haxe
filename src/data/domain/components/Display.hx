@@ -1,4 +1,4 @@
-package data.components;
+package data.domain.components;
 
 import h2d.Drawable;
 

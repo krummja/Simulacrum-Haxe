@@ -1,11 +1,20 @@
 package core;
 
+import data.domain.World;
+import data.ColorKey;
+import data.ColorPaletteKey;
+import data.core.ColorPaletteResources;
 import data.TextResources;
 import h2d.Console;
 import core.RenderLayerManager.RenderLayerType;
 import echoes.Echoes;
 
 class MainLoop {
+	public var UNIT_X: Int = 16;
+	public var UNIT_Y: Int = 16;
+	public var CLEAR_COLOR: ColorKey = C_CLEAR;
+	public var PALETTE_KEY: ColorPaletteKey = PALETTE_ANATHEMA;
+
 	private static var instance: MainLoop;
 
 	public static function getInstance(): MainLoop {
@@ -32,7 +41,11 @@ class MainLoop {
 	 */
 	public var window(get, never): hxd.Window;
 
+	public var palette(get, null): ColorPalette;
+
 	public var frame(default, null): core.Frame;
+
+	public var camera(default, null): Camera;
 
 	public var scenes(default, null): SceneManager;
 
@@ -44,6 +57,8 @@ class MainLoop {
 
 	public var console(default, null): Console;
 
+	public var world(default, null): World;
+
 	public var ui(default, null): UIManager;
 
 	public function new(app: hxd.App) {
@@ -51,21 +66,18 @@ class MainLoop {
 		this.app = app;
 
 		this.frame = new core.Frame();
-
 		this.layers = new RenderLayerManager();
 		this.input = new InputManager();
 		this.commands = new CommandManager();
-
+		this.camera = new Camera();
+		this.world = new World();
 		this.scenes = new SceneManager(this);
 		this.ui = new UIManager(this);
 
 		this.console = new Console(TextResources.BIZCAT);
 		ConsoleConfig.config(this.console);
 
-		var screenWidth = SettingsManager.settings.display.resolutionWidth;
-		var screenHeight = SettingsManager.settings.display.resolutionHeight;
-
-		this.app.s2d.scaleMode = Fixed(screenWidth, screenHeight, 1, Left, Top);
+		this.app.s2d.scaleMode = Fixed(800, 600, 1, Left, Top);
 		this.app.s2d.addChild(this.layers.root);
 
 		Echoes.init();
@@ -84,5 +96,9 @@ class MainLoop {
 
 	private function get_window(): hxd.Window {
 		return hxd.Window.getInstance();
+	}
+
+	private function get_palette(): ColorPalette {
+		return ColorPaletteResources.Get(PALETTE_KEY);
 	}
 }

@@ -1,7 +1,7 @@
 package data.systems;
 
-import data.components.Position;
-import data.components.Sprite;
+import data.domain.components.Position;
+import data.domain.components.Sprite;
 import core.Scene;
 import echoes.System;
 import echoes.Entity;
@@ -15,7 +15,7 @@ class RenderSystem extends System {
 	}
 
 	@:add private function onDisplayAdded(display: Sprite): Void {
-		this.scene.loop.render(OBJECT, display.drawable);
+		this.scene.loop.render(display.layer, display.drawable);
 	}
 
 	@:remove private function onDisplayRemoved(display: Sprite): Void {

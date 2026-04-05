@@ -44,6 +44,8 @@ class SettingsManager {
 
 	private static var settingsDirectory: String = "settings";
 
+	private static var dirty: Bool = false;
+
 	public static function init(fileName: String) {
 		if (!FileSystem.exists(settingsDirectory)) {
 			FileSystem.createDirectory(settingsDirectory);
@@ -93,42 +95,4 @@ class SettingsManager {
 			input: {},
 		};
 	}
-
-	// private var settingsName: String;
-	// private var settingsDirectory: String = "settings";
-	// public function new(name: String) {
-	// 	if (!FileSystem.exists(filePath(['${name}.json']))) {
-	// 		// Directory does not exist - create and add default config
-	// 		setSettingsName(name);
-	// 		loadDefaults();
-	// 		writeSettings(name);
-	// 	} else if (!FileSystem.exists(filePath(['${name}.json']))) {
-	// 		// Directory exists, but config does not exist - create default
-	// 		loadDefaults();
-	// 		writeSettings(name);
-	// 	} else {
-	// 		// Both directory and config exist - load from file
-	// 		readSettings(name);
-	// 	}
-	// }
-	// public function setSettingsName(name: String) {
-	// 	settingsName = name;
-	// 	FileSystem.createDirectory(settingsDirectory);
-	// }
-	// public function readSettings(name: String) {
-	// 	var fileData = File.getContent(filePath(['${name}.json']));
-	// 	var errors = new Array<json2object.Error>();
-	// 	settings = new json2object.JsonParser<Settings>(errors).fromJson(fileData, '${name}.json');
-	// }
-	// public function writeSettings(name: String) {
-	// 	var settingsData = Json.stringify(settings, "\t");
-	// 	File.saveContent(filePath(['${name}.json']), settingsData);
-	// }
-	// public function deleteSettings(name: String) {
-	// 	FS.deletePath(filePath(['${name}.json']));
-	// }
-	// private function filePath(parts: Array<String>): String {
-	// 	var all = [settingsDirectory].concat(parts);
-	// 	return all.join("/");
-	// }
 }

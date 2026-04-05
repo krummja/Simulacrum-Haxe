@@ -1,0 +1,11 @@
+package data.domain.terrain;
+
+enum TerrainType {
+	TERRAIN_WATER;
+	TERRAIN_SNOW;
+	TERRAIN_SAND;
+	TERRAIN_GRASS;
+	TERRAIN_ROCK;
+	TERRAIN_ROCKFACE;
+	TERRAIN_MUD;
+}

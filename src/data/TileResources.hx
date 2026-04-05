@@ -39,5 +39,7 @@ class TileResources {
 		tiles.set(TK_TREE_8, t[4][2]);
 
 		tiles.set(TK_ROCKS_1, t[5][2]);
+
+		tiles.set(PLAYER_1, t[0][25]);
 	}
 }
