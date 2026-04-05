@@ -31,9 +31,9 @@ class RenderLayerManager {
 	public function new() {
 		this.root = new h2d.Layers();
 
-		// this.underlay = new h2d.Bitmap(h2d.Tile.fromColor(0x505050));
-		// this.underlay.width = 10000;
-		// this.underlay.height = 10000;
+		this.underlay = new h2d.Bitmap(h2d.Tile.fromColor(0x505050));
+		this.underlay.width = 10000;
+		this.underlay.height = 10000;
 
 		this.scroller = new h2d.Layers();
 		this.screen = new h2d.Layers();
@@ -52,7 +52,7 @@ class RenderLayerManager {
 		this.createLayer(HUD, SCREEN);
 		this.createLayer(POPUP, SCREEN);
 
-		// this.root.addChildAt(this.underlay, 0);
+		this.root.addChildAt(this.underlay, 0);
 		this.root.addChildAt(this.scroller, 1);
 		this.root.addChildAt(this.screen, 2);
 

@@ -27,25 +27,22 @@ class World {
 	public var worldWidth(get, null): Int;
 	public var worldHeight(get, null): Int;
 
+	public var systems(default, null): SystemManager;
+
 	public function new() {
+		this.systems = new SystemManager();
 		this.spawner = new Spawner();
-		this.player = new PlayerManager();
+		this.player = new PlayerManager(this);
 		this.chunks = new ChunkManager();
 		this.zones = new ZoneManager();
 	}
 
 	public function initialize(): Void {
-		this.spawner.initialize();
+		this.systems.activateAll();
 	}
 
 	public function start(): Void {
-		// var pos = new Coordinate(
-		//     (this.worldWidth / 2).floor(),
-		//     (this.worldHeight / 2).floor(),
-		//     WORLD,
-		// );
-
-		var pos = new Coordinate(32, 32, WORLD);
+		var pos = new Coordinate(2, 2, WORLD);
 		this.player.create(pos);
 	}
 

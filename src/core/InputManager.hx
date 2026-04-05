@@ -62,10 +62,7 @@ class InputManager {
 
 	private function onSceneEvent(event: hxd.Event) {
 		switch (event.kind) {
-			case EMove:
-				var previous = mouse;
-				mouse = new Coordinate(event.relX, event.relY, SCREEN);
-				MainLoop.getInstance().scenes.current.onMouseMove(mouse, previous);
+			// Keyboard Keys
 			case EKeyUp:
 				this.setModKeys(event.keyCode, KEY_UP);
 				this.handleKeyEvent(event.keyCode, KEY_UP);
@@ -74,10 +71,18 @@ class InputManager {
 				this.setModKeys(event.keyCode, KEY_DOWN);
 				this.handleKeyEvent(event.keyCode, KEY_DOWN);
 				MainLoop.getInstance().scenes.current.onKeyDown(event.keyCode);
+
+			// Mouse
+			case EMove:
+				var previous = mouse;
+				mouse = new Coordinate(event.relX, event.relY, SCREEN);
+				MainLoop.getInstance().scenes.current.onMouseMove(mouse, previous);
 			case EPush:
 				MainLoop.getInstance().scenes.current.onMouseDown(new Coordinate(event.relX, event.relY, SCREEN));
 			case ERelease:
 				MainLoop.getInstance().scenes.current.onMouseUp(new Coordinate(event.relX, event.relY, SCREEN));
+
+			// Default
 			case _:
 		}
 	}

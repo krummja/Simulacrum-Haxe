@@ -6,19 +6,19 @@ import core.ColorPalette;
 class ColorPaletteResources {
 	public static var palettes: Map<ColorPaletteKey, core.ColorPalette> = [];
 
-	public static function Get(key: ColorPaletteKey): core.ColorPalette {
+	public static function get(key: ColorPaletteKey): core.ColorPalette {
 		if (key.isNull()) return null;
 		var palette = palettes.get(key);
 		if (palette.isNull()) return null;
 		return palette;
 	}
 
-	public static function Init(): Void {
+	public static function init(): Void {
 		var anathema = hxd.Res.tiles.palettes.anathema.getPixels(BGRA);
-		palettes.set(PALETTE_ANATHEMA, Parse(anathema));
+		palettes.set(PALETTE_ANATHEMA, parse(anathema));
 	}
 
-	private static function Parse(image: Pixels): ColorPalette {
+	private static function parse(image: Pixels): ColorPalette {
 		var p = new ColorPalette();
 
 		p.setColor(C_WHITE, image.getPixel(0, 0));

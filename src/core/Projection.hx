@@ -51,7 +51,7 @@ class Projection {
 	// TO WORLD
 
 	public static function screenToWorld(sx: Float, sy: Float): Coordinate {
-		var p = screenToPixel(sx, sx);
+		var p = screenToPixel(sx, sy);
 		return pixelToWorld(p.x, p.y);
 	}
 

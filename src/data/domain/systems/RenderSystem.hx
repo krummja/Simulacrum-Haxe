@@ -1,21 +1,17 @@
-package data.systems;
+package data.domain.systems;
 
+import core.Projection;
+import core.MainLoop;
 import data.domain.components.Position;
 import data.domain.components.Sprite;
-import core.Scene;
 import echoes.System;
 import echoes.Entity;
 
 class RenderSystem extends System {
-	public final scene: Scene;
-
-	public function new(scene: Scene) {
-		super();
-		this.scene = scene;
-	}
+	public var loop(get, never): MainLoop;
 
 	@:add private function onDisplayAdded(display: Sprite): Void {
-		this.scene.loop.render(display.layer, display.drawable);
+		this.loop.render(display.layer, display.drawable);
 	}
 
 	@:remove private function onDisplayRemoved(display: Sprite): Void {
@@ -23,6 +19,11 @@ class RenderSystem extends System {
 	}
 
 	@:update private function updatePosition(display: Sprite, position: Position): Void {
-		display.drawable.setPosition(position.x, position.y);
+		var coord = Projection.worldToPixel(position.x, position.y);
+		display.drawable.setPosition(coord.x, coord.y);
+	}
+
+	private function get_loop(): MainLoop {
+		return MainLoop.getInstance();
 	}
 }

@@ -1,19 +1,27 @@
 package data;
 
+import data.domain.World;
 import echoes.Entity;
 import common.struct.Coordinate;
 import data.domain.components.Position;
+import data.domain.prefabs.PlayerPrefab;
 
 class PlayerManager {
-	public var entity(default, never): Entity;
+	public var entity(default, null): Entity;
 
 	public var x(get, set): Float;
 	public var y(get, set): Float;
 	public var pos(get, set): Coordinate;
 
-	public function new() {}
+	private var world(default, null): World;
 
-	public function create(pos: Coordinate) {}
+	public function new(world: World) {
+		this.world = world;
+	}
+
+	public function create(pos: Coordinate) {
+		entity = new Player(new Position(pos.x, pos.y));
+	}
 
 	private inline function get_x(): Float {
 		var position = this.entity.get(Position);

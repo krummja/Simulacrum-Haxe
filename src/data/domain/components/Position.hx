@@ -1,5 +1,8 @@
 package data.domain.components;
 
+import core.Projection;
+import common.struct.Coordinate;
+
 class Position {
 	public var x: Float = 0.0;
 	public var y: Float = 0.0;

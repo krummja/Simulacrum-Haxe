@@ -5,13 +5,9 @@ import echoes.Entity;
 import data.domain.components.Sprite;
 import data.domain.components.Position;
 
-class FloorPrefab extends Prefab {
-	public function create(options: Dynamic, pos: Coordinate): Entity {
-		var entity = new Entity();
-
-		entity.add(new Sprite(TK_GRASS_1, C_GREEN_3, C_GREEN_5, GROUND));
-		entity.add(new Position(pos.x, pos.y));
-
-		return entity;
-	}
+@:build(echoes.Entity.build())
+@:arguments(Position)
+abstract Floor(Entity) {
+	public var sprite: Sprite = new Sprite(TK_GRASS_1, C_RED_3, C_GREEN_5, GROUND);
+	public var position: Position;
 }

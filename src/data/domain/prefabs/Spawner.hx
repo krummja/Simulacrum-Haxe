@@ -16,10 +16,10 @@ class Spawner {
 		this.prefabs = new Map();
 	}
 
-	public function initialize() {
-		this.prefabs.set(PLAYER, new PlayerPrefab());
-		this.prefabs.set(FLOOR, new FloorPrefab());
-	}
+	// public function initialize() {
+	// 	this.prefabs.set(PLAYER, new PlayerPrefab());
+	// 	this.prefabs.set(FLOOR, new Floor(new Position(0, 0)));
+	// }
 
 	public function spawn(type: SpawnableType, ?pos: Coordinate, ?options: Dynamic): Entity {
 		var p = pos == null ? new Coordinate(0, 0, WORLD) : pos.toWorld().floor();

@@ -1,5 +1,6 @@
 package core;
 
+import common.struct.Coordinate;
 import data.domain.World;
 import data.ColorKey;
 import data.ColorPaletteKey;
@@ -61,6 +62,8 @@ class MainLoop {
 
 	public var ui(default, null): UIManager;
 
+	public var mousePos(default, set): Coordinate;
+
 	public function new(app: hxd.App) {
 		instance = this;
 		this.app = app;
@@ -79,6 +82,8 @@ class MainLoop {
 
 		this.app.s2d.scaleMode = Fixed(800, 600, 1, Left, Top);
 		this.app.s2d.addChild(this.layers.root);
+
+		this.mousePos = new Coordinate(0.0, 0.0, WORLD);
 
 		Echoes.init();
 	}
@@ -99,6 +104,11 @@ class MainLoop {
 	}
 
 	private function get_palette(): ColorPalette {
-		return ColorPaletteResources.Get(PALETTE_KEY);
+		return ColorPaletteResources.get(PALETTE_KEY);
+	}
+
+	private function set_mousePos(coord: Coordinate): Coordinate {
+		this.mousePos = coord;
+		return coord;
 	}
 }

@@ -1,3 +1,4 @@
+import data.core.ColorPaletteResources;
 import core.SettingsManager;
 import hxd.Res;
 import core.MainLoop;
@@ -26,6 +27,7 @@ class Main extends hxd.App {
 		s2d.renderer.globals.set("vignetteOpacity", 0.01);
 
 		TextResources.init();
+		ColorPaletteResources.init();
 		TileResources.init();
 		Commands.init();
 
