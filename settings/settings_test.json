@@ -11,8 +11,8 @@
 	},
 	"display": {
 		"fullScreen": false,
-		"resolutionWidth": 500,
-		"resolutionHeight": 500,
+		"resolutionWidth": 1440,
+		"resolutionHeight": 900,
 		"scanlines": false
 	},
 	"graphics": {

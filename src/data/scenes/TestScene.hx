@@ -64,7 +64,7 @@ class TestScene extends Scene {
 
 		var cfocus = loop.camera.focus.toWorld().toFloatPoint();
 		var ctarget = loop.world.player.pos.toFloatPoint();
-		loop.camera.focus = cfocus.lerp(ctarget, 0.2).asWorld();
+		loop.camera.focus = cfocus.lerp(ctarget, 0.4).asWorld();
 
 		debugCrosshair = new DebugCrosshair();
 	}
