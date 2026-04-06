@@ -18,10 +18,9 @@ class DebugCrosshair extends h2d.Object {
 	public function new() {
 		super();
 
-		var bm = new Bitmap(DebugResources.get(5, 1));
-		bm.color = 0xff0000.toHxdColor();
-
-		addChild(bm);
+		// var bm = new Bitmap(DebugResources.get(5, 1));
+		// bm.color = 0xff0000.toHxdColor();
+		// addChild(bm);
 
 		loop.layers.render(HUD, this);
 	}
