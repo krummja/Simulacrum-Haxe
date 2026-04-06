@@ -1,14 +1,14 @@
 package core;
 
+import echoes.Echoes;
+import h2d.Console;
 import common.struct.Coordinate;
 import data.domain.World;
 import data.ColorKey;
 import data.ColorPaletteKey;
-import data.core.ColorPaletteResources;
+import data.ColorPaletteResources;
 import data.TextResources;
-import h2d.Console;
 import core.RenderLayerManager.RenderLayerType;
-import echoes.Echoes;
 
 class MainLoop {
 	public var UNIT_X: Int = 16;
@@ -22,24 +22,14 @@ class MainLoop {
 		return instance;
 	}
 
-	/**
-	 * If no instance already exists, create a new `MainLoop`, initializing all attached
-	 * managers and systems. Otherwise, return the existing `MainLoop` singleton.
-	 */
 	public static function create(app: hxd.App): MainLoop {
 		if (instance != null)
 			return instance;
 		return new MainLoop(app);
 	}
 
-	/**
-	 * Heaps App instance passed during construction.
-	 */
 	public var app(default, null): hxd.App;
 
-	/**
-	 * Heaps Window singleton instance, accessed via `hxd.Window.getInstance()`.
-	 */
 	public var window(get, never): hxd.Window;
 
 	public var palette(get, null): ColorPalette;
@@ -62,8 +52,6 @@ class MainLoop {
 
 	public var ui(default, null): UIManager;
 
-	public var mousePos(default, set): Coordinate;
-
 	public function new(app: hxd.App) {
 		instance = this;
 		this.app = app;
@@ -82,8 +70,6 @@ class MainLoop {
 
 		this.app.s2d.scaleMode = Fixed(800, 600, 1, Left, Top);
 		this.app.s2d.addChild(this.layers.root);
-
-		this.mousePos = new Coordinate(0.0, 0.0, WORLD);
 
 		Echoes.init();
 	}
@@ -105,10 +91,5 @@ class MainLoop {
 
 	private function get_palette(): ColorPalette {
 		return ColorPaletteResources.get(PALETTE_KEY);
-	}
-
-	private function set_mousePos(coord: Coordinate): Coordinate {
-		this.mousePos = coord;
-		return coord;
 	}
 }

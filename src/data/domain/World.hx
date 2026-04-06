@@ -3,15 +3,15 @@ package data.domain;
 import echoes.Entity;
 import common.struct.Coordinate;
 import common.struct.IntPoint;
-import data.domain.prefabs.Spawner;
 import data.domain.terrain.ChunkManager;
 import data.domain.terrain.ZoneManager;
+import data.domain.prefabs.*;
+import data.domain.components.*;
 import core.MainLoop;
 
 class World {
 	public var loop(get, null): MainLoop;
 	public var player(default, null): PlayerManager;
-	public var spawner(default, null): Spawner;
 	public var chunks(default, null): ChunkManager;
 	public var zones(default, null): ZoneManager;
 
@@ -31,7 +31,6 @@ class World {
 
 	public function new() {
 		this.systems = new SystemManager();
-		this.spawner = new Spawner();
 		this.player = new PlayerManager(this);
 		this.chunks = new ChunkManager();
 		this.zones = new ZoneManager();
@@ -42,6 +41,13 @@ class World {
 	}
 
 	public function start(): Void {
+		for (x in 0...40) {
+			for (y in 0...40) {
+				var pos = new Coordinate(x, y, WORLD);
+				new Floor(new Position(pos.x, pos.y));
+			}
+		}
+
 		var pos = new Coordinate(2, 2, WORLD);
 		this.player.create(pos);
 	}

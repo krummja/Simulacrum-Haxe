@@ -5,6 +5,16 @@ import common.struct.Coordinate;
 class Projection {
 	private static var loop(get, null): core.MainLoop;
 
+	private static var chunkSize(get, null): Int;
+
+	private inline static function get_loop(): core.MainLoop {
+		return MainLoop.getInstance();
+	}
+
+	private inline static function get_chunkSize(): Int {
+		return loop.world.chunkSize;
+	}
+
 	// TO SCREEN
 
 	public static function pixelToScreen(px: Float, py: Float): Coordinate {
@@ -20,11 +30,13 @@ class Projection {
 	}
 
 	public static function chunkToScreen(cx: Float, cy: Float): Coordinate {
-		return new Coordinate(0.0, 0.0, SCREEN);
+		var px = chunkToPixel(cx, cy);
+		return pixelToScreen(px.x, px.y);
 	}
 
 	public static function zoneToScreen(zx: Float, zy: Float): Coordinate {
-		return new Coordinate(0.0, 0.0, SCREEN);
+		var chunk = zoneToChunk(zx, zy);
+		return chunkToScreen(chunk.x, chunk.y);
 	}
 
 	// TO PIXEL
@@ -41,11 +53,13 @@ class Projection {
 	}
 
 	public static function chunkToPixel(cx: Float, cy: Float): Coordinate {
-		return new Coordinate(0.0, 0.0, PIXEL);
+		var world = chunkToWorld(cx, cy);
+		return worldToPixel(world.x, world.y);
 	}
 
 	public static function zoneToPixel(zx: Float, zy: Float): Coordinate {
-		return new Coordinate(0.0, 0.0, PIXEL);
+		var chunk = zoneToChunk(zx, zy);
+		return chunkToPixel(chunk.x, chunk.y);
 	}
 
 	// TO WORLD
@@ -60,50 +74,54 @@ class Projection {
 	}
 
 	public static function chunkToWorld(cx: Float, cy: Float): Coordinate {
-		return new Coordinate(0.0, 0.0, WORLD);
+		return new Coordinate(cx * chunkSize, cy * chunkSize, WORLD);
 	}
 
 	public static function zoneToWorld(zx: Float, zy: Float): Coordinate {
-		return new Coordinate(0.0, 0.0, WORLD);
+		var chunk = zoneToChunk(zx, zy);
+		return chunkToWorld(chunk.x, chunk.y);
 	}
 
 	// TO CHUNK
 
 	public static function screenToChunk(sx: Float, sy: Float): Coordinate {
-		return new Coordinate(0.0, 0.0, CHUNK);
+		var w = screenToWorld(sx, sy);
+		return worldToChunk(w.x, w.y);
 	}
 
 	public static function pixelToChunk(px: Float, py: Float): Coordinate {
-		return new Coordinate(0.0, 0.0, CHUNK);
+		var w = pixelToWorld(px, py);
+		return new Coordinate(w.x / chunkSize, w.y / chunkSize, CHUNK);
 	}
 
 	public static function worldToChunk(wx: Float, wy: Float): Coordinate {
-		return new Coordinate(0.0, 0.0, CHUNK);
+		return new Coordinate(Math.floor(wx / chunkSize), Math.floor(wy / chunkSize), CHUNK);
 	}
 
 	public static function zoneToChunk(zx: Float, zy: Float): Coordinate {
-		return new Coordinate(0.0, 0.0, CHUNK);
+		var cs = loop.world.chunksPerZone;
+		return new Coordinate(zx * cs, zy * cs, CHUNK);
 	}
 
 	// TO ZONE
 
 	public static function screenToZone(sx: Float, sy: Float): Coordinate {
-		return new Coordinate(0.0, 0.0, ZONE);
+		var c = screenToChunk(sx, sy);
+		return chunkToZone(c.x, c.y);
 	}
 
-	public static function pixelToZone(zx: Float, zy: Float): Coordinate {
-		return new Coordinate(0.0, 0.0, ZONE);
+	public static function pixelToZone(px: Float, py: Float): Coordinate {
+		var chunk = pixelToChunk(px, py);
+		return chunkToZone(chunk.x, chunk.y);
 	}
 
 	public static function worldToZone(wx: Float, wy: Float): Coordinate {
-		return new Coordinate(0.0, 0.0, ZONE);
+		var chunk = worldToChunk(wx, wy);
+		return chunkToZone(chunk.x, chunk.y);
 	}
 
 	public static function chunkToZone(cx: Float, cy: Float): Coordinate {
-		return new Coordinate(0.0, 0.0, ZONE);
-	}
-
-	private inline static function get_loop(): core.MainLoop {
-		return MainLoop.getInstance();
+		var cs = loop.world.chunksPerZone;
+		return new Coordinate(cx / cs, cy / cs, ZONE);
 	}
 }

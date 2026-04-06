@@ -1,8 +1,8 @@
-import data.core.ColorPaletteResources;
-import core.SettingsManager;
 import hxd.Res;
+import core.SettingsManager;
 import core.MainLoop;
 import data.Commands;
+import data.ColorPaletteResources;
 import data.TileResources;
 import data.TextResources;
 import data.scenes.TestScene;

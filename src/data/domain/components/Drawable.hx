@@ -1,6 +1,6 @@
 package data.domain.components;
 
-import shaders.SpriteShader;
+import shaders.SpriteShader2;
 import core.RenderLayerManager.RenderLayerType;
 
 abstract class Drawable {
@@ -14,13 +14,13 @@ abstract class Drawable {
 	public var primaryColor(default, never): ColorKey;
 	public var secondaryColor(get, never): ColorKey;
 	public var drawable(get, never): h2d.Drawable;
-	public var shader(default, null): SpriteShader;
+	public var shader(default, null): SpriteShader2;
 
 	public var offsetX(default, set): Float = 0;
 	public var offsetY(default, set): Float = 0;
 
 	public function new(primary: ColorKey = C_WHITE, secondary: ColorKey = C_CLEAR, layer: RenderLayerType = OBJECT) {
-		this.shader = new SpriteShader();
+		this.shader = new SpriteShader2();
 		this.layer = layer;
 		this.primary = primary;
 		this.secondary = secondary;

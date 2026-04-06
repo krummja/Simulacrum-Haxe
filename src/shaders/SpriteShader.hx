@@ -17,6 +17,7 @@ class SpriteShader extends hxsl.Shader {
 		function fragment() {
 			var color = pixelColor.rgb;
 			var isBackground = pixelColor.a == 0;
+
 			var isPrimary = !isBackground && pixelColor.r == 1 && pixelColor.g == 1 && pixelColor.b == 1;
 			var isSecondary = !isBackground && pixelColor.r == 0 && pixelColor.g == 0 && pixelColor.b == 0;
 			var isOutline = !isBackground && pixelColor.r == 1 && pixelColor.g == 0 && pixelColor.a == 0;
@@ -41,7 +42,7 @@ class SpriteShader extends hxsl.Shader {
 				}
 			}
 
-			if (color.r == 1.0 && color.g == 1.0 && color.b == 0.0) {
+			if (color.r == 1.0 && color.g == 0.0 && color.b == 1.0) {
 				color = clearColor;
 			}
 
@@ -55,7 +56,8 @@ class SpriteShader extends hxsl.Shader {
 		this.secondary = secondary.toHxdColor().toVector();
 		this.outline = MainLoop.getInstance().CLEAR_COLOR.toHxdColor().toVector();
 		this.background = MainLoop.getInstance().CLEAR_COLOR.toHxdColor().toVector();
-		this.clearBackground = 1;
+		this.clearColor = MainLoop.getInstance().CLEAR_COLOR.toHxdColor().toVector();
+		this.clearBackground = 0;
 	}
 	// @formatter:on
 }

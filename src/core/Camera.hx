@@ -52,16 +52,16 @@ class Camera {
 		return value;
 	}
 
-	private function get_x(): Float {
-		var c = Projection.pixelToWorld(-scroller.x / zoom, -scroller.y / zoom);
-		return c.x;
-	}
-
 	private function set_y(value: Float): Float {
 		var p = Projection.worldToPixel(x, value);
 		scroller.x = -(p.x * zoom).floor();
 		scroller.y = -(p.y * zoom).floor();
 		return value;
+	}
+
+	private function get_x(): Float {
+		var c = Projection.pixelToWorld(-scroller.x / zoom, -scroller.y / zoom);
+		return c.x;
 	}
 
 	private function get_y(): Float {
@@ -70,8 +70,18 @@ class Camera {
 	}
 
 	private function set_focus(value: Coordinate): Coordinate {
-		var mid = new Coordinate(width / 2, height / 2, SCREEN);
-		pos = value.sub(mid).add(pos);
+		if (value.space != WORLD) {
+			trace("Camera focus should be in world space");
+		}
+
+		// Get the screen midpoint coordinate
+		var screenMid = new Coordinate(width / 2, height / 2, SCREEN);
+
+		var worldVal = value;
+		var worldPos = pos;
+
+		pos = worldVal.sub(screenMid).add(worldPos);
+		// Returns the world coordinate for the camera
 		return pos;
 	}
 

@@ -16,7 +16,6 @@ class InputManager {
 	public function new() {
 		this.queue = new Queue(4);
 		this.mouse = new Coordinate(0, 0, SCREEN);
-
 		MainLoop.getInstance().window.addEventTarget(this.onSceneEvent);
 	}
 

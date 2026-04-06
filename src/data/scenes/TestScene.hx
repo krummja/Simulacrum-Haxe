@@ -1,47 +1,18 @@
 package data.scenes;
 
-import core.KeyCode;
-import core.Projection;
 import common.struct.Coordinate;
+import h3d.Vector;
 import core.Command;
 import core.Frame;
 import core.Scene;
 import data.scenes.settings_scene.SettingsScene;
-import data.domain.prefabs.FloorPrefab;
-import data.domain.components.Position;
 
 class TestScene extends Scene {
 	public function new() {}
 
 	private override function onEnter(): Void {
 		loop.world.initialize();
-
-		for (x in 0...40) {
-			for (y in 0...40) {
-				var pos = new Coordinate(x, y, WORLD);
-				new Floor(new Position(pos.x, pos.y));
-			}
-		}
-
 		loop.world.start();
-	}
-
-	private override function onMouseMove(pos: Coordinate, prev: Coordinate) {
-		loop.mousePos = Projection.screenToWorld(pos.x, pos.y);
-	}
-
-	private override function onKeyDown(key: KeyCode) {
-		switch (key) {
-			case KEY_W:
-				loop.world.player.y -= 1;
-			case KEY_S:
-				loop.world.player.y += 1;
-			case KEY_A:
-				loop.world.player.x -= 1;
-			case KEY_D:
-				loop.world.player.x += 1;
-			case _:
-		}
 	}
 
 	private function handleInput(command: Command) {
@@ -55,12 +26,35 @@ class TestScene extends Scene {
 	}
 
 	private override function update(frame: Frame): Void {
+		loop.world.update();
+
+		// var cfocus = loop.camera.focus.toWorld().toFloatPoint();
+		// var ctarget = loop.world.player.pos.toFloatPoint();
+		// loop.camera.focus = cfocus.lerp(ctarget, 0.2).asWorld();
+
+		loop.camera.pos = loop.world.player.pos.toWorld();
+
 		var cmd = loop.commands.peek();
 		if (cmd != null) {
 			handleInput(loop.commands.next());
 		}
 
-		loop.world.update();
+		var direction = new Vector(0, 0);
+
+		if (hxd.Key.isDown(hxd.Key.W)) {
+			direction.y = -1;
+		}
+		if (hxd.Key.isDown(hxd.Key.A)) {
+			direction.x = -1;
+		}
+		if (hxd.Key.isDown(hxd.Key.S)) {
+			direction.y = 1;
+		}
+		if (hxd.Key.isDown(hxd.Key.D)) {
+			direction.x = 1;
+		}
+
+		loop.world.player.move(direction, frame.dt);
 	}
 
 	private override function onDestroy(): Void {}

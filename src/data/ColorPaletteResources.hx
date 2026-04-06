@@ -1,4 +1,4 @@
-package data.core;
+package data;
 
 import hxd.Pixels;
 import core.ColorPalette;
@@ -29,7 +29,7 @@ class ColorPaletteResources {
 		p.setColor(C_GRAY_5, image.getPixel(5, 0));
 		p.setColor(C_GRAY_6, image.getPixel(6, 0));
 		p.setColor(C_BLACK, image.getPixel(7, 0));
-		p.setColor(C_CLEAR, image.getPixel(7, 1));
+		p.setColor(C_CLEAR, image.getPixel(7, 2));
 
 		p.setColor(C_GREEN_0, image.getPixel(0, 1));
 		p.setColor(C_GREEN_1, image.getPixel(1, 1));

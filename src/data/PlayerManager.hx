@@ -1,17 +1,18 @@
 package data;
 
+import h3d.Vector;
 import data.domain.World;
-import echoes.Entity;
 import common.struct.Coordinate;
-import data.domain.components.Position;
-import data.domain.prefabs.PlayerPrefab;
+import data.domain.components.*;
+import data.domain.prefabs.*;
 
 class PlayerManager {
-	public var entity(default, null): Entity;
+	public var entity(default, null): Player;
 
 	public var x(get, set): Float;
 	public var y(get, set): Float;
 	public var pos(get, set): Coordinate;
+	public var speed(get, set): Int;
 
 	private var world(default, null): World;
 
@@ -23,16 +24,18 @@ class PlayerManager {
 		entity = new Player(new Position(pos.x, pos.y));
 	}
 
+	public function move(direction: Vector, dt: Float) {
+		direction.normalize();
+		this.x += direction.x * speed * dt;
+		this.y += direction.y * speed * dt;
+	}
+
 	private inline function get_x(): Float {
-		var position = this.entity.get(Position);
-		if (position == null) return 0.0;
-		return position.x;
+		return entity.position.x;
 	}
 
 	private inline function get_y(): Float {
-		var position = this.entity.get(Position);
-		if (position == null) return 0.0;
-		return position.y;
+		return entity.position.y;
 	}
 
 	private inline function get_pos(): Coordinate {
@@ -40,17 +43,27 @@ class PlayerManager {
 	}
 
 	private inline function set_x(value: Float): Float {
-		this.entity.get(Position).setPosition(value, this.y);
+		entity.position.x = value;
 		return value;
 	}
 
 	private inline function set_y(value: Float): Float {
-		this.entity.get(Position).setPosition(this.x, value);
+		entity.position.y = value;
 		return value;
 	}
 
 	private inline function set_pos(value: Coordinate): Coordinate {
-		this.entity.get(Position).setPosition(value.x, value.y);
+		entity.position.x = value.x;
+		entity.position.y = value.y;
+		return value;
+	}
+
+	private inline function get_speed(): Int {
+		return entity.speed;
+	}
+
+	private inline function set_speed(value: Int): Int {
+		entity.speed = value;
 		return value;
 	}
 }
