@@ -18,7 +18,7 @@ class Camera {
 	public var scroller(get, null): h2d.Object;
 
 	public function new() {
-		zoom = 2;
+		zoom = 4;
 	}
 
 	private inline function get_width(): Float {
@@ -73,22 +73,10 @@ class Camera {
 		return c.y;
 	}
 
-	/**
-	 * Uses the screen width and height to calculate an offset position for camera focus.
-	 *
-	 * Side effects:
-	 * 	- sets x
-	 * 	- sets y
-	 *
-	 * @param value World-space coordinate to anchor focus position
-	 * @return World-space coordinate representing actual camera focus position
-	 */
 	private function set_focus(value: Coordinate): Coordinate {
 		var screenMid = new Coordinate(width / 2, height / 2, SCREEN);
-		var worldVal = value;
-		var worldPos = pos;
-		pos = worldVal.sub(screenMid).add(worldPos);
-		return pos;
+		this.pos = value.sub(screenMid).add(this.pos);
+		return this.pos;
 	}
 
 	private function get_focus(): Coordinate {

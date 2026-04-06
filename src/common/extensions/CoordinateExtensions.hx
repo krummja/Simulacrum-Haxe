@@ -80,12 +80,12 @@ class CoordinateExtensions {
 
 	public static inline function add(a: Coordinate, b: Coordinate): Coordinate {
 		var projected = b.lift(a.space);
-		return new Coordinate(a.x - projected.x, a.y - projected.y, a.space);
+		return new Coordinate(a.x + projected.x, a.y + projected.y, a.space);
 	}
 
 	public static inline function sub(a: Coordinate, b: Coordinate): Coordinate {
 		var projected = b.lift(a.space);
-		return new Coordinate(a.x + projected.x, a.y + projected.y, a.space);
+		return new Coordinate(a.x - projected.x, a.y - projected.y, a.space);
 	}
 
 	public static inline function floor(c: Coordinate): Coordinate {

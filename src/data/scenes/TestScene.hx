@@ -80,8 +80,6 @@ class TestScene extends Scene {
 	}
 
 	private override function update(frame: Frame): Void {
-		loop.world.update();
-
 		var cfocus = loop.camera.focus.toWorld().toFloatPoint();
 		var ctarget = loop.world.player.pos.toFloatPoint();
 		loop.camera.focus = cfocus.lerp(ctarget, 0.2).asWorld();
@@ -107,8 +105,7 @@ class TestScene extends Scene {
 		}
 
 		loop.world.player.move(direction, frame.dt);
-
-		drawDebug();
+		loop.world.update();
 	}
 
 	private function drawDebug() {
