@@ -68,7 +68,6 @@ class MainLoop {
 		this.console = new Console(TextResources.BIZCAT);
 		ConsoleConfig.config(this.console);
 
-		this.app.s2d.scaleMode = Fixed(800, 600, 1, Left, Top);
 		this.app.s2d.addChild(this.layers.root);
 
 		Echoes.init();

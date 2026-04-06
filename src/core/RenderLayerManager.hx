@@ -1,5 +1,7 @@
 package core;
 
+import shaders.CheckerShader;
+import hxd.Window;
 import h2d.Bitmap;
 import h2d.filter.Shader;
 import h2d.filter.Group;
@@ -19,9 +21,25 @@ enum RenderLayerType {
 }
 
 class RenderLayerManager {
+	/**
+	 * Composite of world- and screen-space layers, as well as any additional effects
+	 * layers.
+	 */
 	public var root(default, null): h2d.Layers;
+
+	/**
+	 * World-space layers.
+	 */
 	public var scroller(default, null): h2d.Layers;
+
+	/**
+	 * Screen-space layers.
+	 */
 	public var screen(default, null): h2d.Layers;
+
+	/**
+	 * Background layer, mostly for visual testing.
+	 */
 	public var underlay: h2d.Bitmap;
 
 	private var scrollerCount: Int = 0;
@@ -31,9 +49,15 @@ class RenderLayerManager {
 	public function new() {
 		this.root = new h2d.Layers();
 
-		this.underlay = new h2d.Bitmap(h2d.Tile.fromColor(0x505050));
-		this.underlay.width = 10000;
-		this.underlay.height = 10000;
+		this.underlay = new h2d.Bitmap(h2d.Tile.fromColor(0xF1AB23));
+		this.underlay.width = Window.getInstance().width;
+		this.underlay.height = Window.getInstance().height;
+		this.underlay.addShader(new CheckerShader());
+
+		Window.getInstance().addResizeEvent(() -> {
+			this.underlay.width = Window.getInstance().width;
+			this.underlay.height = Window.getInstance().height;
+		});
 
 		this.scroller = new h2d.Layers();
 		this.screen = new h2d.Layers();

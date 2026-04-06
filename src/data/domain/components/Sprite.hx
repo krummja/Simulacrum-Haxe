@@ -1,6 +1,5 @@
 package data.domain.components;
 
-import shaders.SpriteShader;
 import core.RenderLayerManager.RenderLayerType;
 import h2d.Tile;
 import h2d.Bitmap;

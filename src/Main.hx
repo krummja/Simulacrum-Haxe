@@ -1,3 +1,4 @@
+import data.DebugResources;
 import hxd.Res;
 import core.SettingsManager;
 import core.MainLoop;
@@ -29,6 +30,7 @@ class Main extends hxd.App {
 		TextResources.init();
 		ColorPaletteResources.init();
 		TileResources.init();
+		DebugResources.init();
 		Commands.init();
 
 		var window = hxd.Window.getInstance();
@@ -37,6 +39,7 @@ class Main extends hxd.App {
 
 		window.title = SettingsManager.settings.application.title;
 		window.addResizeEvent(() -> {
+			s2d.renderer.globals.set("screenW", window.width);
 			s2d.renderer.globals.set("screenH", window.height);
 		});
 

@@ -11,6 +11,10 @@ class Camera {
 	public var x(get, set): Float;
 	public var y(get, set): Float;
 	public var focus(get, set): Coordinate;
+
+	/**
+	 * `h2d.Layers` instance that acts as root for all world-space objects.
+	 */
 	public var scroller(get, null): h2d.Object;
 
 	public function new() {
@@ -69,19 +73,21 @@ class Camera {
 		return c.y;
 	}
 
+	/**
+	 * Uses the screen width and height to calculate an offset position for camera focus.
+	 *
+	 * Side effects:
+	 * 	- sets x
+	 * 	- sets y
+	 *
+	 * @param value World-space coordinate to anchor focus position
+	 * @return World-space coordinate representing actual camera focus position
+	 */
 	private function set_focus(value: Coordinate): Coordinate {
-		if (value.space != WORLD) {
-			trace("Camera focus should be in world space");
-		}
-
-		// Get the screen midpoint coordinate
 		var screenMid = new Coordinate(width / 2, height / 2, SCREEN);
-
 		var worldVal = value;
 		var worldPos = pos;
-
 		pos = worldVal.sub(screenMid).add(worldPos);
-		// Returns the world coordinate for the camera
 		return pos;
 	}
 
