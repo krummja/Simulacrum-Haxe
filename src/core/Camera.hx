@@ -12,9 +12,6 @@ class Camera {
 	public var y(get, set): Float;
 	public var focus(get, set): Coordinate;
 
-	/**
-	 * `h2d.Layers` instance that acts as root for all world-space objects.
-	 */
 	public var scroller(get, null): h2d.Object;
 
 	public function new() {

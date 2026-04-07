@@ -44,7 +44,8 @@ class World {
 		for (x in 0...40) {
 			for (y in 0...40) {
 				var pos = new Coordinate(x, y, WORLD);
-				new Floor(new Position(pos.x, pos.y));
+				var floor = new Floor(new Position(pos.x, pos.y));
+				floor.sprite.drawable.setPosition(pos.x, pos.y);
 			}
 		}
 

@@ -8,7 +8,6 @@ import data.domain.prefabs.*;
 
 class PlayerManager {
 	public var entity(default, null): Player;
-
 	public var x(get, set): Float;
 	public var y(get, set): Float;
 	public var pos(get, set): Coordinate;
@@ -24,10 +23,14 @@ class PlayerManager {
 		entity = new Player(new Position(pos.x, pos.y));
 	}
 
-	public function move(direction: Vector, dt: Float) {
+	public function move(direction: Vector) {
 		direction.normalize();
-		this.x += direction.x * speed * dt;
-		this.y += direction.y * speed * dt;
+
+		this.entity.velocity.x = direction.x * speed;
+		this.entity.velocity.y = direction.y * speed;
+
+		// this.x += direction.x;
+		// this.y += direction.y;
 	}
 
 	private inline function get_x(): Float {

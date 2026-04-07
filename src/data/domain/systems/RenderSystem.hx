@@ -1,5 +1,7 @@
 package data.domain.systems;
 
+import common.struct.Coordinate;
+import data.domain.components.IsMovable;
 import core.Projection;
 import core.MainLoop;
 import data.domain.components.Position;
@@ -18,9 +20,12 @@ class RenderSystem extends System {
 		display.drawable.remove();
 	}
 
-	@:update private function updatePosition(display: Sprite, position: Position): Void {
+	@:update private function updatePosition(display: Sprite, position: Position, movable: IsMovable): Void {
+		// trace(new Coordinate(position.x, position.y, WORLD).toString());
 		var coord = Projection.worldToPixel(position.x, position.y);
 		display.drawable.setPosition(coord.x, coord.y);
+
+		// trace(coord.toString());
 	}
 
 	private function get_loop(): MainLoop {
