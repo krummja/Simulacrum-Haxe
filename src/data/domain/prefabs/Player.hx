@@ -17,5 +17,4 @@ abstract Player(Entity) {
 	public var isPlayer: IsPlayer = new IsPlayer();
 	public var isMovable: IsMovable = new IsMovable();
 	public var moniker: Moniker = new Moniker("Player");
-	public var speed: Int = 6;
 }

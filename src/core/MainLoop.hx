@@ -13,6 +13,8 @@ import core.RenderLayerManager.RenderLayerType;
 class MainLoop {
 	public var UNIT_X: Int = 16;
 	public var UNIT_Y: Int = 16;
+	public var SUBUNIT_X: Int = 8;
+	public var SUBUNIT_Y: Int = 8;
 	public var CLEAR_COLOR: ColorKey = C_CLEAR;
 	public var PALETTE_KEY: ColorPaletteKey = PALETTE_ANATHEMA;
 
@@ -69,13 +71,12 @@ class MainLoop {
 		ConsoleConfig.config(this.console);
 
 		this.app.s2d.addChild(this.layers.root);
-
-		Echoes.init();
 	}
 
 	public inline function update(dt: Float): Void {
-		app.s2d.renderer.globals.set("time", frame.elapsed);
-		this.frame.update();
+		// app.s2d.renderer.globals.set("time", frame.elapsed);
+		// this.frame.update();
+		// this.world.update();
 		this.scenes.current.update(this.frame);
 		this.ui.update(this.frame);
 	}

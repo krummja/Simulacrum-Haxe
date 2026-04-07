@@ -1,5 +1,7 @@
 package data.domain.components;
 
+import common.struct.Coordinate;
+
 class Position {
 	public var x: Float = 0.0;
 	public var y: Float = 0.0;
@@ -9,8 +11,12 @@ class Position {
 		this.y = y;
 	}
 
-	public function setPosition(x: Float, y: Float) {
-		this.x = x;
-		this.y = y;
+	public function update(x: Float, y: Float) {
+		this.x += x;
+		this.y += y;
+	}
+
+	public function asCoordinate(space: CoordinateSpace = WORLD): Coordinate {
+		return new Coordinate(this.x, this.y, space);
 	}
 }

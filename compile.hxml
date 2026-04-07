@@ -9,4 +9,5 @@
 -lib bits
 -lib echoes
 -hl build/hl/simulacrum.hl
+-D echoes_profiling
 -main Main

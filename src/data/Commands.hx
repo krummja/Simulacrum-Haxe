@@ -18,6 +18,10 @@ class Commands {
         cmd(INPUT_DOMAIN_DEFAULT,   CMD_CYCLE_INPUT_REVERSE,    KEY_TAB,    true,   false,  false);
         cmd(INPUT_DOMAIN_DEFAULT,   CMD_CONFIRM,                KEY_ENTER,  false,  false,  false);
         cmd(INPUT_DOMAIN_DEFAULT,   CMD_CANCEL,                 KEY_ESCAPE, false,  false,  false);
+        cmd(INPUT_DOMAIN_DEFAULT,   CMD_MOVE_N,                 KEY_UP,     false,  false,  false);
+        cmd(INPUT_DOMAIN_DEFAULT,   CMD_MOVE_E,                 KEY_RIGHT,  false,  false,  false);
+        cmd(INPUT_DOMAIN_DEFAULT,   CMD_MOVE_S,                 KEY_DOWN,   false,  false,  false);
+        cmd(INPUT_DOMAIN_DEFAULT,   CMD_MOVE_W,                 KEY_LEFT,   false,  false,  false);
         cmd(INPUT_DOMAIN_DEFAULT,   CMD_MOVE_N,                 KEY_W,      false,  false,  false);
         cmd(INPUT_DOMAIN_DEFAULT,   CMD_MOVE_NE,                KEY_E,      false,  false,  false);
         cmd(INPUT_DOMAIN_DEFAULT,   CMD_MOVE_E,                 KEY_D,      false,  false,  false);

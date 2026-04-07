@@ -1,5 +1,6 @@
 package data.domain;
 
+import core.Projection;
 import echoes.Entity;
 import common.struct.Coordinate;
 import common.struct.IntPoint;
@@ -44,6 +45,7 @@ class World {
 		for (x in 0...40) {
 			for (y in 0...40) {
 				var pos = new Coordinate(x, y, WORLD);
+				pos = Projection.worldToPixel(pos.x, pos.y);
 				var floor = new Floor(new Position(pos.x, pos.y));
 				floor.sprite.drawable.setPosition(pos.x, pos.y);
 			}
@@ -53,7 +55,9 @@ class World {
 		this.player.create(pos);
 	}
 
-	public function update(): Void {}
+	public function update(): Void {
+		this.systems.update();
+	}
 
 	public overload extern inline function getEntitiesAt(pos: IntPoint): Array<Entity> {
 		// var w = pos.asWorld();

@@ -1,5 +1,6 @@
 package core;
 
+import echoes.Echoes;
 import hxd.Window;
 import ui.Test;
 import ui.XYMetric;
@@ -16,9 +17,7 @@ typedef Metric = {name: String, component: XYMetric};
 @:xml('
 <vbox width="100%" height="100%" style="padding: 10px">
 	<hbox styleName="texturedRect" id="wrapper" width="100%" height="100%">
-		<vbox id="metrics" width="100%" horizontalAlign="right">
-			<label id="fps" text="FPS" style="color:#ffffff;" horizontalAlign="right" />
-		</vbox>
+		<vbox id="metrics" width="100%" horizontalAlign="right" />
 	</hbox>
 </vbox>
 ')
@@ -32,7 +31,7 @@ class UIRoot extends Box {
 
 		metric_components = [];
 
-		fps.text = 'FPS: ${UIManager.fps}';
+		// fps.text = 'FPS: ${UIManager.fps}';
 
 		for (reportable in UIManager.reportables) {
 			var comp = new XYMetric(reportable.name, "0", "0");
@@ -42,7 +41,7 @@ class UIRoot extends Box {
 	}
 
 	public function update() {
-		fps.text = 'FPS: ${UIManager.fps}';
+		// fps.text = 'FPS: ${UIManager.fps}';
 
 		for (reportable in UIManager.reportables) {
 			var comp = metric_components.get(reportable.name);
@@ -130,8 +129,8 @@ class UIManager {
 	}
 
 	public function update(frame: core.Frame) {
-		UIManager.fps = Math.fround(frame.smoothFps);
-
+		// UIManager.fps = Math.fround(frame.smoothFps);
+		// UIManager.fps = Echoes.clock;
 		for (reportable in reportables) {
 			reportable.coord = reportable.updater();
 		}

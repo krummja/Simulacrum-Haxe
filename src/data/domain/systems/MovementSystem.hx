@@ -1,21 +1,30 @@
 package data.domain.systems;
 
+import echoes.System;
 import common.struct.Coordinate;
-import echoes.View;
 import data.domain.components.Velocity;
 import data.domain.components.Position;
+import data.domain.components.IsMovable;
+import core.Projection;
 import core.MainLoop;
-import echoes.System;
 
 class MovementSystem extends System {
 	public var loop(get, never): MainLoop;
 
-	@:update private function updatePosition(position: Position, velocity: Velocity, time: Float): Void {
-		position.x += velocity.x * time;
-		position.y += velocity.y * time;
+	private var smoothingSpeed: Float = 1.0;
 
-		// TODO This appears to be the culprit - the time value is not smooth frame-to-frame.
-		trace(new Coordinate(velocity.x * time, velocity.y * time, PIXEL).toString());
+	@:update private function updatePosition(position: Position, velocity: Velocity, movable: IsMovable, time: Float): Void {
+		// var currentPosition = position.asCoordinate();
+
+		// position.x += velocity.x * time;
+		// position.y += velocity.y * time;
+		position.update(velocity.x * time, velocity.y * time);
+
+		// var targetPosition = new Coordinate(targetX, targetY, WORLD);
+		// var newPosition = currentPosition.lerp(targetPosition, time);
+
+		// position.x = targetX;
+		// position.y = targetY;
 	}
 
 	private function get_loop(): MainLoop {

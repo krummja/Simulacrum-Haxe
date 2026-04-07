@@ -8,7 +8,6 @@ abstract class Drawable {
 	public var secondary(default, set): ColorKey;
 	public var outline(default, set): ColorKey;
 	public var background(default, set): Null<ColorKey>;
-	public var enableLutShader(default, set): Bool = false;
 
 	public var layer(default, null): RenderLayerType;
 	public var primaryColor(default, never): ColorKey;
@@ -16,8 +15,8 @@ abstract class Drawable {
 	public var drawable(get, never): h2d.Drawable;
 	public var shader(default, null): SpriteShader2;
 
-	public var offsetX(default, set): Float = 0;
-	public var offsetY(default, set): Float = 0;
+	public var offsetX(default, set): Float = -8.0;
+	public var offsetY(default, set): Float = -8.0;
 
 	public function new(primary: ColorKey = C_WHITE, secondary: ColorKey = C_CLEAR, layer: RenderLayerType = OBJECT) {
 		this.shader = new SpriteShader2();
@@ -83,11 +82,5 @@ abstract class Drawable {
 
 	private function get_drawable(): h2d.Drawable {
 		return this.getDrawable();
-	}
-
-	private function set_enableLutShader(value: Bool): Bool {
-		this.enableLutShader = value;
-		// this.shader.enableLut = value ? 1 : 0;
-		return value;
 	}
 }

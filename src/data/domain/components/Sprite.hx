@@ -1,5 +1,6 @@
 package data.domain.components;
 
+import common.struct.FloatPoint;
 import core.RenderLayerManager.RenderLayerType;
 import h2d.Tile;
 import h2d.Bitmap;
@@ -17,6 +18,15 @@ class Sprite extends Drawable {
 		this.ob = new Bitmap(this.tile);
 		this.ob.addShader(this.shader);
 		this.ob.visible = true;
+	}
+
+	public function getPosition(): FloatPoint {
+		return new FloatPoint(this.ob.x, this.ob.y);
+	}
+
+	public function setPosition(x: Float, y: Float): Void {
+		this.ob.setPosition(x, y);
+		// trace('${this.ob.x},${this.ob.y}');
 	}
 
 	private function get_tile(): Tile {

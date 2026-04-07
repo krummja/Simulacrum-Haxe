@@ -9,7 +9,7 @@ class Velocity {
 		this.y = y;
 	}
 
-	public function setPosition(x: Float, y: Float) {
+	public function update(x: Float, y: Float) {
 		this.x = x;
 		this.y = y;
 	}

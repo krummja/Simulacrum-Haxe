@@ -1,5 +1,6 @@
 package data.scenes;
 
+import common.struct.IntPoint;
 import core.Projection;
 import hxd.Window;
 import h2d.Bitmap;
@@ -47,8 +48,7 @@ class DebugCrosshair extends h2d.Object {
 }
 
 class TestScene extends Scene {
-	private var debugCrosshair: DebugCrosshair;
-
+	// private var debugCrosshair: DebugCrosshair;
 	public function new() {}
 
 	private override function onEnter(): Void {
@@ -57,9 +57,7 @@ class TestScene extends Scene {
 
 		var cfocus = loop.camera.focus.toWorld().toFloatPoint();
 		var ctarget = loop.world.player.pos.toFloatPoint();
-		loop.camera.focus = cfocus.lerp(ctarget, 0.4).asWorld();
-
-		debugCrosshair = new DebugCrosshair();
+		loop.camera.focus = cfocus.lerp(ctarget, 0.2).asWorld();
 	}
 
 	private function handleInput(command: Command) {
@@ -73,40 +71,24 @@ class TestScene extends Scene {
 	}
 
 	private override function update(frame: Frame): Void {
-		loop.world.update();
+		// var cfocus = loop.camera.focus.toWorld().toFloatPoint();
+		// var ctarget = loop.world.player.pos.toWorld().toFloatPoint();
+		// loop.camera.focus = cfocus.lerp(ctarget, 0.2).asWorld();
 
-		var cfocus = loop.camera.focus.toWorld().toFloatPoint();
-		var ctarget = loop.world.player.pos.toFloatPoint();
-		loop.camera.focus = cfocus.lerp(ctarget, 0.2).asWorld();
+		loop.world.player.input.clear();
 
 		var cmd = loop.commands.peek();
 		if (cmd != null) {
 			handleInput(loop.commands.next());
 		}
 
-		var direction = new Vector(0, 0);
-
-		if (hxd.Key.isDown(hxd.Key.W)) {
-			direction.y = -1;
-		}
-		if (hxd.Key.isDown(hxd.Key.A)) {
-			direction.x = -1;
-		}
-		if (hxd.Key.isDown(hxd.Key.S)) {
-			direction.y = 1;
-		}
-		if (hxd.Key.isDown(hxd.Key.D)) {
-			direction.x = 1;
-		}
-
-		loop.world.player.move(direction);
-
-		drawDebug();
-	}
-
-	private function drawDebug() {
-		debugCrosshair.update();
+		loop.world.player.move(loop.world.player.input.toIntPoint());
+		loop.world.update();
 	}
 
 	private override function onDestroy(): Void {}
+
+	private function isKeyboardDownFast(k: Int) {
+		return hxd.Key.isDown(k);
+	}
 }
