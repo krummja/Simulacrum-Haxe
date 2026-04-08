@@ -11,8 +11,8 @@ import data.domain.prefabs.*;
 
 class PlayerManager {
 	public var entity(default, null): Player;
-	public var x(get, set): Float;
-	public var y(get, set): Float;
+	public var x(get, null): Float;
+	public var y(get, null): Float;
 	public var pos(get, null): Coordinate;
 
 	public var input(default, null): Input2D;
@@ -26,26 +26,6 @@ class PlayerManager {
 
 	public function create(pos: Coordinate) {
 		entity = new Player(new Position(pos.x, pos.y));
-	}
-
-	public function move(direction: IntPoint) {
-		// this.entity.velocity.x = direction.x * speed;
-		// this.entity.velocity.y = direction.y * speed;
-		// this.entity.velocity.update(direction.x * speed, direction.y * speed);
-		this.entity.position.update(
-			direction.x * MainLoop.getInstance().UNIT_X,
-			direction.y * MainLoop.getInstance().UNIT_Y,
-		);
-	}
-
-	private inline function set_x(value: Float): Float {
-		entity.position.x = value;
-		return value;
-	}
-
-	private inline function set_y(value: Float): Float {
-		entity.position.y = value;
-		return value;
 	}
 
 	private inline function get_x(): Float {

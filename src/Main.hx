@@ -54,6 +54,6 @@ class Main extends hxd.App {
 	public override function update(dt: Float): Void {
 		s2d.renderer.globals.set("time", this.loop.frame.elapsed);
 		s2d.renderer.globals.set("warp", SettingsManager.settings.display.warpAmount);
-		this.loop.update(dt);
+		this.loop.update();
 	}
 }

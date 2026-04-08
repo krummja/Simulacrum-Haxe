@@ -73,10 +73,8 @@ class MainLoop {
 		this.app.s2d.addChild(this.layers.root);
 	}
 
-	public inline function update(dt: Float): Void {
-		// app.s2d.renderer.globals.set("time", frame.elapsed);
-		// this.frame.update();
-		// this.world.update();
+	public inline function update(): Void {
+		this.frame.update();
 		this.scenes.current.update(this.frame);
 		this.ui.update(this.frame);
 	}

@@ -18,4 +18,11 @@ class FloatPointExtensions {
 	public static inline function asPixel(p: FloatPoint): Coordinate {
 		return new Coordinate(p.x, p.y, PIXEL);
 	}
+
+	public static inline function multiply(p: FloatPoint, v: Float): FloatPoint {
+		return {
+			x: p.x * v,
+			y: p.y * v,
+		};
+	}
 }

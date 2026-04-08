@@ -18,7 +18,7 @@ class SystemManager {
 	}
 
 	public function activateAll() {
-		// movement_system.activate();
+		movement_system.activate();
 		render_system.activate();
 	}
 

@@ -1,16 +1,18 @@
 package data.scenes;
 
-import common.struct.IntPoint;
-import core.Projection;
 import hxd.Window;
 import h2d.Bitmap;
 import h3d.Vector;
+import common.struct.Cardinal;
+import common.struct.IntPoint;
+import core.Projection;
 import core.MainLoop;
 import core.Command;
 import core.Frame;
 import core.Scene;
 import common.struct.Coordinate;
 import data.scenes.settings_scene.SettingsScene;
+import data.domain.components.Move;
 
 class DebugCrosshair extends h2d.Object {
 	public var loop(get, null): MainLoop;
@@ -48,7 +50,6 @@ class DebugCrosshair extends h2d.Object {
 }
 
 class TestScene extends Scene {
-	// private var debugCrosshair: DebugCrosshair;
 	public function new() {}
 
 	private override function onEnter(): Void {
@@ -66,6 +67,14 @@ class TestScene extends Scene {
 				loop.scenes.push(new Console());
 			case CMD_CANCEL:
 				loop.scenes.push(new SettingsScene());
+			case CMD_MOVE_N:
+				this.move(NORTH);
+			case CMD_MOVE_S:
+				this.move(SOUTH);
+			case CMD_MOVE_E:
+				this.move(EAST);
+			case CMD_MOVE_W:
+				this.move(WEST);
 			case _:
 		}
 	}
@@ -75,14 +84,11 @@ class TestScene extends Scene {
 		// var ctarget = loop.world.player.pos.toWorld().toFloatPoint();
 		// loop.camera.focus = cfocus.lerp(ctarget, 0.2).asWorld();
 
-		loop.world.player.input.clear();
-
 		var cmd = loop.commands.peek();
 		if (cmd != null) {
 			handleInput(loop.commands.next());
 		}
 
-		loop.world.player.move(loop.world.player.input.toIntPoint());
 		loop.world.update();
 	}
 
@@ -90,5 +96,13 @@ class TestScene extends Scene {
 
 	private function isKeyboardDownFast(k: Int) {
 		return hxd.Key.isDown(k);
+	}
+
+	private function move(direction: Cardinal): Void {
+		var target = loop.world.player.pos.toIntPoint().add(direction.toOffset());
+		var move = new Move(target.asWorld(), 1.0, EASE_LINEAR);
+		move.start = loop.world.player.pos;
+		move.startTime = MainLoop.getInstance().frame.elapsed;
+		loop.world.player.entity.add(move);
 	}
 }

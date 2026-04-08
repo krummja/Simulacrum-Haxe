@@ -11,6 +11,11 @@ class Position {
 		this.y = y;
 	}
 
+	public function set(x: Float, y: Float) {
+		this.x = x;
+		this.y = y;
+	}
+
 	public function update(x: Float, y: Float) {
 		this.x += x;
 		this.y += y;

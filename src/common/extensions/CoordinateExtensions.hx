@@ -1,5 +1,7 @@
 package common.extensions;
 
+import common.util.Easing;
+import common.util.Easing.EasingType;
 import core.MainLoop;
 import common.struct.FloatPoint;
 import core.Projection;
@@ -121,5 +123,13 @@ class CoordinateExtensions {
 
 	public static inline function direction(a: Coordinate, b: Coordinate): FloatPoint {
 		return b.sub(a).normalized();
+	}
+
+	public static inline function ease(a: Coordinate, b: Coordinate, x: Float, easing: EasingType): Coordinate {
+		var progress = Easing.apply(x, easing);
+		var direction = a.direction(b);
+		var distance = a.toWorld().distance(b.toWorld(), EUCLIDEAN);
+		var newPx = direction.multiply(progress * distance);
+		return newPx.asWorld().add(a);
 	}
 }

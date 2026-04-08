@@ -19,10 +19,7 @@ class CommandManager {
 	public function peek(): Null<Command> {
 		if (this.queue.length > 0)
 			return this.queue.peek();
-		var commands = Commands.getForDomain([
-			this.loop.scenes.current.inputDomain,
-			INPUT_DOMAIN_DEFAULT,
-		]);
+		var commands = Commands.getForDomain([this.loop.scenes.current.inputDomain, INPUT_DOMAIN_DEFAULT]);
 
 		while (this.loop.input.hasNext()) {
 			var event = this.loop.input.peek();
@@ -39,10 +36,7 @@ class CommandManager {
 		if (this.queue.length > 0)
 			return this.queue.dequeue();
 
-		var commands = Commands.getForDomain([
-			this.loop.scenes.current.inputDomain,
-			INPUT_DOMAIN_DEFAULT,
-		]);
+		var commands = Commands.getForDomain([this.loop.scenes.current.inputDomain, INPUT_DOMAIN_DEFAULT]);
 
 		while (this.loop.input.hasNext()) {
 			var event = this.loop.input.next();
