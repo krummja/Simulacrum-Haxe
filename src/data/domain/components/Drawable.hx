@@ -14,6 +14,7 @@ abstract class Drawable {
 	public var secondaryColor(get, never): ColorKey;
 	public var drawable(get, never): h2d.Drawable;
 	public var shader(default, null): SpriteShader2;
+	public var visible(default, set): Bool;
 
 	public var offsetX(default, set): Float = -8.0;
 	public var offsetY(default, set): Float = -8.0;
@@ -82,5 +83,10 @@ abstract class Drawable {
 
 	private function get_drawable(): h2d.Drawable {
 		return this.getDrawable();
+	}
+
+	private function set_visible(value: Bool): Bool {
+		this.drawable.visible = value;
+		return value;
 	}
 }

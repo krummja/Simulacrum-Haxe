@@ -12,7 +12,7 @@ class Move {
 
 	public var startTime: Float;
 
-	public function new(goal: Coordinate, duration: Float = 1.0, easing: EasingType = EASE_LINEAR, epsilon: Float = 0.0025) {
+	public function new(goal: Coordinate, duration: Float = 1.0, easing: EasingType = EASE_LINEAR, epsilon: Float = 0.015) {
 		this.goal = goal;
 		this.duration = duration;
 		this.easing = easing;

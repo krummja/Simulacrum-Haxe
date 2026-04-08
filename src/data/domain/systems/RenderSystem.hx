@@ -1,5 +1,6 @@
 package data.domain.systems;
 
+import data.domain.components.SpriteAnim;
 import core.Projection;
 import core.MainLoop;
 import data.domain.components.Position;

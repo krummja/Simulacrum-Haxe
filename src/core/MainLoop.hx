@@ -52,6 +52,8 @@ class MainLoop {
 
 	public var world(default, null): World;
 
+	public var timeout(default, null): TimeoutManager;
+
 	public var ui(default, null): UIManager;
 
 	public function new(app: hxd.App) {
@@ -65,6 +67,7 @@ class MainLoop {
 		this.camera = new Camera();
 		this.world = new World();
 		this.scenes = new SceneManager(this);
+		this.timeout = new TimeoutManager();
 		this.ui = new UIManager(this);
 
 		this.console = new Console(TextResources.BIZCAT);
@@ -75,6 +78,7 @@ class MainLoop {
 
 	public inline function update(): Void {
 		this.frame.update();
+		this.timeout.update();
 		this.scenes.current.update(this.frame);
 		this.ui.update(this.frame);
 	}

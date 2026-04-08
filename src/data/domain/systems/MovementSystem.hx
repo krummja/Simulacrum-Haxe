@@ -1,15 +1,29 @@
 package data.domain.systems;
 
 import common.util.Easing;
-import common.util.Easing.EasingType;
 import echoes.System;
 import echoes.Entity;
-import echoes.Echoes;
 import core.MainLoop;
-import common.struct.Coordinate;
 import data.domain.components.Position;
 import data.domain.components.Move;
 
 class MovementSystem extends System {
-	@:update private function updatePosition(entity: Entity, position: Position, move: Move, time: Float): Void {}
+	@:update private function updatePosition(entity: Entity, position: Position, move: Move): Void {
+		var timeoutId = '${entity.id}-move';
+		var moveTimer = MainLoop.getInstance().timeout.get(timeoutId);
+
+		if (moveTimer == null || moveTimer.isComplete) {
+			var target = move.goal.toWorld();
+			position.set(target.x, target.y);
+			entity.remove(move);
+			return;
+		}
+
+		var start = move.start.toWorld();
+		var target = move.goal.toWorld();
+		var progress = Easing.apply(moveTimer.progress, move.easing);
+		var newPos = start.lerp(target, progress);
+
+		position.set(newPos.x, newPos.y);
+	}
 }

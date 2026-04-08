@@ -26,7 +26,6 @@ class Sprite extends Drawable {
 
 	public function setPosition(x: Float, y: Float): Void {
 		this.ob.setPosition(x, y);
-		// trace('${this.ob.x},${this.ob.y}');
 	}
 
 	private function get_tile(): Tile {

@@ -14,6 +14,11 @@ class TileResources {
 	}
 
 	public static function init() {
+		TileResources.initOverworld();
+		TileResources.initPlayer();
+	}
+
+	public static function initOverworld() {
 		var sheet = hxd.Res.tiles.kenny2;
 		var t = sheet.toTile().divide(49, 22);
 
@@ -39,7 +44,25 @@ class TileResources {
 		tiles.set(TK_TREE_8, t[2][4]);
 
 		tiles.set(TK_ROCKS_1, t[2][5]);
-
 		tiles.set(PLAYER_1, t[0][25]);
+	}
+
+	public static function initPlayer() {
+		var sheet = hxd.Res.tiles.test_overworld;
+		var t = sheet.toTile().divide(12, 32);
+
+		// Standing
+		tiles.set(PLAYER_S_STAND, t[0][0]);
+		tiles.set(PLAYER_N_STAND, t[0][1]);
+		tiles.set(PLAYER_W_STAND, t[0][2]);
+		tiles.set(PLAYER_E_STAND, t[0][3]);
+
+		// Running
+		tiles.set(PLAYER_S_RUN_0, t[0][4]);
+		tiles.set(PLAYER_S_RUN_1, t[0][5]);
+		tiles.set(PLAYER_N_RUN_0, t[0][6]);
+		tiles.set(PLAYER_N_RUN_1, t[0][7]);
+		tiles.set(PLAYER_W_RUN, t[0][8]);
+		tiles.set(PLAYER_E_RUN, t[0][9]);
 	}
 }

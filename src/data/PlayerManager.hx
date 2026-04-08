@@ -1,9 +1,5 @@
 package data;
 
-import core.MainLoop;
-import core.Input2D;
-import common.struct.IntPoint;
-import h3d.Vector;
 import data.domain.World;
 import common.struct.Coordinate;
 import data.domain.components.*;
@@ -15,13 +11,10 @@ class PlayerManager {
 	public var y(get, null): Float;
 	public var pos(get, null): Coordinate;
 
-	public var input(default, null): Input2D;
-
 	private var world(default, null): World;
 
 	public function new(world: World) {
 		this.world = world;
-		this.input = new Input2D(false);
 	}
 
 	public function create(pos: Coordinate) {

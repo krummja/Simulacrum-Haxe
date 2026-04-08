@@ -1,5 +1,7 @@
 package data.scenes;
 
+import data.domain.components.SpriteAnim;
+import common.util.Timeout;
 import hxd.Window;
 import h2d.Bitmap;
 import h3d.Vector;
@@ -12,6 +14,7 @@ import core.Frame;
 import core.Scene;
 import common.struct.Coordinate;
 import data.scenes.settings_scene.SettingsScene;
+import core.KeyCode;
 import data.domain.components.Move;
 
 class DebugCrosshair extends h2d.Object {
@@ -84,25 +87,96 @@ class TestScene extends Scene {
 		// var ctarget = loop.world.player.pos.toWorld().toFloatPoint();
 		// loop.camera.focus = cfocus.lerp(ctarget, 0.2).asWorld();
 
-		var cmd = loop.commands.peek();
-		if (cmd != null) {
-			handleInput(loop.commands.next());
-		}
-
 		loop.world.update();
+
+		if (!loop.world.player.entity.exists(Move)) {
+			var heldDir = getHeldDirection();
+			if (heldDir != null) {
+				loop.input.flush();
+				move(heldDir);
+			} else {
+				var cmd = loop.commands.next();
+				if (cmd != null) {
+					handleInput(cmd);
+				}
+			}
+		} else {
+			loop.commands.next(); // drain one queued event per frame to prevent buildup
+		}
 	}
 
-	private override function onDestroy(): Void {}
-
-	private function isKeyboardDownFast(k: Int) {
-		return hxd.Key.isDown(k);
+	private function getHeldDirection(): Null<Cardinal> {
+		if (hxd.Key.isDown(KEY_UP) || hxd.Key.isDown(KEY_W)) return NORTH;
+		if (hxd.Key.isDown(KEY_DOWN) || hxd.Key.isDown(KEY_X)) return SOUTH;
+		if (hxd.Key.isDown(KEY_RIGHT) || hxd.Key.isDown(KEY_D)) return EAST;
+		if (hxd.Key.isDown(KEY_LEFT) || hxd.Key.isDown(KEY_A)) return WEST;
+		return null;
 	}
 
 	private function move(direction: Cardinal): Void {
+		if (loop.world.player.entity.exists(Move)) {
+			return;
+		}
+
 		var target = loop.world.player.pos.toIntPoint().add(direction.toOffset());
-		var move = new Move(target.asWorld(), 1.0, EASE_LINEAR);
+
+		var timeoutId = '${loop.world.player.entity.id}-move';
+
+		var moveTimer = loop.timeout.start(timeoutId, 0.25, false);
+		animate(direction, moveTimer.duration);
+		var move = new Move(target.asWorld(), moveTimer.duration, EASE_LINEAR);
+
 		move.start = loop.world.player.pos;
-		move.startTime = MainLoop.getInstance().frame.elapsed;
+		move.startTime = loop.frame.elapsed;
+
 		loop.world.player.entity.add(move);
+	}
+
+	private function animate(direction: Cardinal, duration: Float): Void {
+		var animation = mapDirectionToAnimation(direction);
+		var endTile = mapDirectionToSprite(direction);
+
+		var timeoutId = '${loop.world.player.entity.id}-${animation}';
+		if (loop.timeout.get(timeoutId) != null && !loop.timeout.get(timeoutId).isComplete) {
+			return;
+		}
+
+		loop.timeout.start(timeoutId, duration, false);
+		var anim = new SpriteAnim(animation, endTile, 12, C_RED_5, C_YELLOW_0, ACTOR);
+		anim.loop = false;
+
+		anim.startTime = loop.frame.elapsed;
+
+		loop.world.player.entity.add(anim);
+	}
+
+	private function mapDirectionToAnimation(direction: Cardinal): AnimationKey {
+		return switch (direction) {
+			case NORTH:
+				PLAYER_MOVE_UP;
+			case SOUTH:
+				PLAYER_MOVE_DOWN;
+			case EAST:
+				PLAYER_MOVE_RIGHT;
+			case WEST:
+				PLAYER_MOVE_LEFT;
+			case _:
+				AK_UNKNOWN;
+		}
+	}
+
+	private function mapDirectionToSprite(direction: Cardinal): TileKey {
+		return switch (direction) {
+			case NORTH:
+				PLAYER_N_STAND;
+			case SOUTH:
+				PLAYER_S_STAND;
+			case EAST:
+				PLAYER_E_STAND;
+			case WEST:
+				PLAYER_W_STAND;
+			case _:
+				TK_UNKNOWN;
+		}
 	}
 }

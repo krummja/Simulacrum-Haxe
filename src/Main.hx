@@ -1,3 +1,4 @@
+import data.AnimationResources;
 import data.DebugResources;
 import hxd.Res;
 import core.SettingsManager;
@@ -30,6 +31,7 @@ class Main extends hxd.App {
 		TextResources.init();
 		ColorPaletteResources.init();
 		TileResources.init();
+		AnimationResources.init();
 		DebugResources.init();
 		Commands.init();
 

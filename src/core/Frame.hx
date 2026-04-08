@@ -11,6 +11,8 @@ class Frame {
 	 */
 	public var fps(get, null): Float;
 
+	public var spf(get, null): Float;
+
 	public var smoothFps(get, null): Float;
 
 	public var frameTimes(default, null): Array<Float> = [];
@@ -22,7 +24,7 @@ class Frame {
 	 *
 	 * When tmod = 1, it means the game is running at the desired speed
 	 * When tmod < 1, it means the game is running faster than desired
-	 * WHen tmod > 1, it means the game is running slower than desired
+	 * When tmod > 1, it means the game is running slower than desired
 	 */
 	public var tmod(get, null): Float;
 
@@ -68,5 +70,9 @@ class Frame {
 
 	private function get_tmod(): Float {
 		return hxd.Timer.tmod;
+	}
+
+	private function get_spf(): Float {
+		return tmod * (1 / fps);
 	}
 }
