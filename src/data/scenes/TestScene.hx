@@ -1,11 +1,13 @@
 package data.scenes;
 
+import core.MainLoop;
 import common.struct.Cardinal;
-import data.domain.components.Move;
 import core.Frame;
 import core.KeyCode;
 import core.Scene;
 import common.struct.Coordinate;
+import data.domain.components.Move;
+import data.domain.components.IsTarget;
 
 class TestScene extends Scene {
 	public function new() {}
@@ -16,8 +18,11 @@ class TestScene extends Scene {
 	}
 
 	private override function update(?frame: Frame): Void {
-		loop.world.update();
 		handleInput();
+		loop.world.update();
+
+		trace(loop.world.player.pos.toString());
+		// updateCamera();
 	}
 
 	private function handleInput(): Void {
@@ -45,7 +50,7 @@ class TestScene extends Scene {
 
 		var target = loop.world.player.pos.toIntPoint().add(direction.toOffset());
 		var timeoutId = '${loop.world.player.entity.id}-move';
-		var moveTimer = loop.timeout.start(timeoutId, 0.15, false);
+		var moveTimer = loop.timeout.start(timeoutId, 0.25, false);
 
 		var move = new Move(target.asWorld(), moveTimer.duration, EASE_LINEAR);
 		move.start = loop.world.player.pos;
@@ -59,5 +64,13 @@ class TestScene extends Scene {
 		if (hxd.Key.isDown(KEY_RIGHT) || hxd.Key.isDown(KEY_D)) return EAST;
 		if (hxd.Key.isDown(KEY_LEFT) || hxd.Key.isDown(KEY_A)) return WEST;
 		return null;
+	}
+
+	private function updateCamera(): Void {
+		// trace(MainLoop.getInstance().frame.dt);
+		var cfocus = loop.camera.focus.toWorld().toFloatPoint();
+		var ctarget = loop.world.player.pos.toFloatPoint();
+		loop.camera.focus = ctarget.asWorld();
+		// loop.camera.focus = cfocus.lerp(ctarget, 0.2).asWorld();
 	}
 }

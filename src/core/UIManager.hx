@@ -1,16 +1,10 @@
 package core;
 
-import echoes.Echoes;
 import hxd.Window;
-import ui.Test;
 import ui.XYMetric;
 import common.struct.Coordinate;
-import haxe.ui.core.ItemRenderer;
-import haxe.ui.core.Screen;
 import haxe.ui.*;
 import haxe.ui.containers.*;
-import haxe.ui.components.*;
-import haxe.ui.data.*;
 
 typedef Metric = {name: String, component: XYMetric};
 
@@ -32,18 +26,16 @@ class UIRoot extends Box {
 		metric_components = [];
 
 		// fps.text = 'FPS: ${UIManager.fps}';
-
-		for (reportable in UIManager.reportables) {
-			var comp = new XYMetric(reportable.name, "0", "0");
-			metric_components[reportable.name] = comp;
-			metrics.addComponent(comp);
-		}
 	}
 
 	public function update() {
 		// fps.text = 'FPS: ${UIManager.fps}';
-
 		for (reportable in UIManager.reportables) {
+			if (!metric_components.exists(reportable.name)) {
+				var comp = new XYMetric(reportable.name, "0", "0");
+				metric_components[reportable.name] = comp;
+				metrics.addComponent(comp);
+			}
 			var comp = metric_components.get(reportable.name);
 			comp.update(reportable.coord.x, reportable.coord.y);
 		}
@@ -125,7 +117,7 @@ class UIManager {
 	}
 
 	public function addReportable(rep: Reportable): Void {
-		reportables.push(rep);
+		UIManager.reportables.push(rep);
 	}
 
 	public function update(frame: core.Frame) {

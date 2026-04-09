@@ -1,12 +1,12 @@
 package common.extensions;
 
+import core.MainLoop;
+import core.Projection;
+import common.algorithm.Distance;
+import common.struct.Coordinate;
+import common.struct.FloatPoint;
 import common.util.Easing;
 import common.util.Easing.EasingType;
-import core.MainLoop;
-import common.struct.FloatPoint;
-import core.Projection;
-import common.struct.Coordinate;
-import common.algorithm.Distance;
 
 class CoordinateExtensions {
 	public static inline function lift(c: Coordinate, space: CoordinateSpace): Coordinate {
@@ -131,5 +131,11 @@ class CoordinateExtensions {
 		var distance = a.toWorld().distance(b.toWorld(), EUCLIDEAN);
 		var newPx = direction.multiply(progress * distance);
 		return newPx.asWorld().add(a);
+	}
+
+	public static inline function angTo(a: Coordinate, b: Coordinate): Float {
+		var pxa = a.toPixel();
+		var pxb = b.toPixel();
+		return Math.atan2(pxb.y - pxa.y, pxb.x - pxa.x);
 	}
 }

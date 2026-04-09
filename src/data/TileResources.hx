@@ -65,4 +65,11 @@ class TileResources {
 		tiles.set(PLAYER_W_RUN, t[0][8]);
 		tiles.set(PLAYER_E_RUN, t[0][9]);
 	}
+
+	public static function initDebug() {
+		var sheet = hxd.Res.tiles.crosshairs;
+		var t = sheet.toTile().divide(20, 10);
+
+		tiles.set(CROSSHAIRS, t[5][1]);
+	}
 }

@@ -40,4 +40,6 @@ enum TileKey {
 	PLAYER_N_RUN_1;
 	PLAYER_W_RUN;
 	PLAYER_E_RUN;
+
+	CROSSHAIRS;
 }

@@ -8,8 +8,9 @@ import common.struct.IntPoint;
 import data.domain.PlayerManager;
 import data.domain.terrain.ChunkManager;
 import data.domain.terrain.ZoneManager;
-import data.domain.prefabs.*;
+import data.domain.systems.*;
 import data.domain.components.*;
+import data.domain.prefabs.*;
 
 class World {
 	public var loop(get, null): MainLoop;
@@ -31,6 +32,8 @@ class World {
 
 	public var systems(default, null): SystemManager;
 
+	public var started(get, null): Bool = false;
+
 	public function new() {
 		this.systems = new SystemManager();
 		this.player = new PlayerManager(this);
@@ -39,6 +42,8 @@ class World {
 	}
 
 	public function initialize(): Void {
+		this.systems.addSystem(ON_UPDATE, new MovementSystem());
+		this.systems.addSystem(ON_UPDATE, new RenderSystem());
 		this.systems.activateAll();
 	}
 
@@ -54,6 +59,8 @@ class World {
 
 		var pos = new Coordinate(2, 2, WORLD);
 		this.player.create(pos);
+
+		started = true;
 	}
 
 	public function update(): Void {
@@ -95,5 +102,9 @@ class World {
 
 	private function get_chunkSize(): Int {
 		return (this.zoneSize / this.chunksPerZone).ceil();
+	}
+
+	private function get_started(): Bool {
+		return started;
 	}
 }

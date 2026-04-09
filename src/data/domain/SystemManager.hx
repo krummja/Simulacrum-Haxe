@@ -1,24 +1,49 @@
 package data.domain;
 
+import echoes.System;
+import echoes.SystemList;
 import echoes.Echoes;
 import core.MainLoop;
 import data.domain.systems.MovementSystem;
 import data.domain.systems.RenderSystem;
 
+enum SystemKey {
+	PRE_UPDATE;
+	ON_UPDATE;
+	POST_UPDATE;
+	FIXED_UPDATE;
+}
+
 class SystemManager {
 	public var loop(get, never): MainLoop;
 
-	public var movement_system(default, null): MovementSystem;
-	public var render_system(default, null): RenderSystem;
+	private var preUpdate: SystemList = new SystemList();
+	private var onUpdate: SystemList = new SystemList();
+	private var postUpdate: SystemList = new SystemList();
+	private var fixedUpdate: SystemList = new SystemList();
 
 	public function new() {
-		movement_system = new MovementSystem();
-		render_system = new RenderSystem();
+		fixedUpdate.clock.setFixedTickLength(1 / 30);
 	}
 
 	public function activateAll() {
-		movement_system.activate();
-		render_system.activate();
+		preUpdate.activate();
+		onUpdate.activate();
+		postUpdate.activate();
+		fixedUpdate.activate();
+	}
+
+	public function addSystem(key: SystemKey, system: System) {
+		switch (key) {
+			case PRE_UPDATE:
+				preUpdate.add(system);
+			case ON_UPDATE:
+				onUpdate.add(system);
+			case POST_UPDATE:
+				postUpdate.add(system);
+			case FIXED_UPDATE:
+				fixedUpdate.add(system);
+		}
 	}
 
 	public function update() {
