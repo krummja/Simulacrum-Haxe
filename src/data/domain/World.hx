@@ -1,14 +1,15 @@
 package data.domain;
 
-import core.Projection;
 import echoes.Entity;
+import core.Projection;
+import core.MainLoop;
 import common.struct.Coordinate;
 import common.struct.IntPoint;
+import data.domain.PlayerManager;
 import data.domain.terrain.ChunkManager;
 import data.domain.terrain.ZoneManager;
 import data.domain.prefabs.*;
 import data.domain.components.*;
-import core.MainLoop;
 
 class World {
 	public var loop(get, null): MainLoop;

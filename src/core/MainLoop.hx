@@ -1,8 +1,6 @@
 package core;
 
-import echoes.Echoes;
 import h2d.Console;
-import common.struct.Coordinate;
 import data.domain.World;
 import data.ColorKey;
 import data.ColorPaletteKey;

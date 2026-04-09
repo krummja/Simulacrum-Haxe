@@ -1,0 +1,182 @@
+package data.scenes;
+
+import common.struct.Cardinal;
+import common.struct.Coordinate;
+import common.struct.IntPoint;
+import common.util.Timeout;
+import core.Command;
+import core.Frame;
+import core.KeyCode;
+import core.MainLoop;
+import core.Projection;
+import core.Scene;
+import data.domain.components.Move;
+import data.domain.components.SpriteAnim;
+import data.scenes.settings_scene.SettingsScene;
+import h2d.Bitmap;
+import h3d.Vector;
+import hxd.Window;
+
+class DebugCrosshair extends h2d.Object {
+	public var loop(get, null): MainLoop;
+	public var pos(get, set): Coordinate;
+
+	public function new() {
+		super();
+
+		var bm = new Bitmap(DebugResources.get(5, 1));
+		bm.color = 0xff0000.toHxdColor();
+		addChild(bm);
+
+		loop.layers.render(HUD, this);
+	}
+
+	public function update() {
+		var mp = loop.input.mouse;
+		pos = mp;
+	}
+
+	private function get_pos(): Coordinate {
+		return new Coordinate(x, y, SCREEN);
+	}
+
+	private function set_pos(value: Coordinate): Coordinate {
+		var sp = value.toScreen();
+		var size = getSize();
+		setPosition(sp.x - (size.width / 2), sp.y - (size.height / 2));
+		return value;
+	}
+
+	private function get_loop(): MainLoop {
+		return MainLoop.getInstance();
+	}
+}
+
+class TestScene extends Scene {
+	public function new() {}
+
+	private override function onEnter(): Void {
+		loop.world.initialize();
+		loop.world.start();
+
+		var cfocus = loop.camera.focus.toWorld().toFloatPoint();
+		var ctarget = loop.world.player.pos.toFloatPoint();
+		loop.camera.focus = cfocus.lerp(ctarget, 0.2).asWorld();
+	}
+
+	private function handleInput(command: Command) {
+		switch (command.type) {
+			case CMD_CONSOLE:
+				loop.scenes.push(new Console());
+			case CMD_CANCEL:
+				loop.scenes.push(new SettingsScene());
+			case CMD_MOVE_N:
+				this.move(NORTH);
+			case CMD_MOVE_S:
+				this.move(SOUTH);
+			case CMD_MOVE_E:
+				this.move(EAST);
+			case CMD_MOVE_W:
+				this.move(WEST);
+			case _:
+		}
+	}
+
+	private override function update(?frame: Frame): Void {
+		// var cfocus = loop.camera.focus.toWorld().toFloatPoint();
+		// var ctarget = loop.world.player.pos.toWorld().toFloatPoint();
+		// loop.camera.focus = cfocus.lerp(ctarget, 0.2).asWorld();
+
+		loop.world.update();
+
+		if (!loop.world.player.entity.exists(Move)) {
+			var heldDir = getHeldDirection();
+			if (heldDir != null) {
+				loop.input.flush();
+				move(heldDir);
+			} else {
+				var cmd = loop.commands.next();
+				if (cmd != null) {
+					handleInput(cmd);
+				}
+			}
+		} else {
+			loop.commands.next(); // drain one queued event per frame to prevent buildup
+		}
+	}
+
+	private function getHeldDirection(): Null<Cardinal> {
+		if (hxd.Key.isDown(KEY_UP) || hxd.Key.isDown(KEY_W)) return NORTH;
+		if (hxd.Key.isDown(KEY_DOWN) || hxd.Key.isDown(KEY_X)) return SOUTH;
+		if (hxd.Key.isDown(KEY_RIGHT) || hxd.Key.isDown(KEY_D)) return EAST;
+		if (hxd.Key.isDown(KEY_LEFT) || hxd.Key.isDown(KEY_A)) return WEST;
+		return null;
+	}
+
+	private function move(direction: Cardinal): Void {
+		if (loop.world.player.entity.exists(Move)) {
+			return;
+		}
+
+		var target = loop.world.player.pos.toIntPoint().add(direction.toOffset());
+
+		var timeoutId = '${loop.world.player.entity.id}-move';
+
+		var moveTimer = loop.timeout.start(timeoutId, 0.25, false);
+		animate(direction, moveTimer.duration);
+		var move = new Move(target.asWorld(), moveTimer.duration, EASE_LINEAR);
+
+		move.start = loop.world.player.pos;
+		move.startTime = loop.frame.elapsed;
+
+		loop.world.player.entity.add(move);
+	}
+
+	private function animate(direction: Cardinal, duration: Float): Void {
+		var animation = mapDirectionToAnimation(direction);
+		var endTile = mapDirectionToSprite(direction);
+
+		var timeoutId = '${loop.world.player.entity.id}-${animation}';
+		if (loop.timeout.get(timeoutId) != null && !loop.timeout.get(timeoutId).isComplete) {
+			return;
+		}
+
+		loop.timeout.start(timeoutId, duration, false);
+		var anim = new SpriteAnim(animation, endTile, 12, C_RED_5, C_YELLOW_0, ACTOR);
+		anim.loop = false;
+
+		anim.startTime = loop.frame.elapsed;
+
+		loop.world.player.entity.add(anim);
+	}
+
+	private function mapDirectionToAnimation(direction: Cardinal): AnimationKey {
+		return switch (direction) {
+			case NORTH:
+				PLAYER_MOVE_UP;
+			case SOUTH:
+				PLAYER_MOVE_DOWN;
+			case EAST:
+				PLAYER_MOVE_RIGHT;
+			case WEST:
+				PLAYER_MOVE_LEFT;
+			case _:
+				AK_UNKNOWN;
+		}
+	}
+
+	private function mapDirectionToSprite(direction: Cardinal): TileKey {
+		return switch (direction) {
+			case NORTH:
+				PLAYER_N_STAND;
+			case SOUTH:
+				PLAYER_S_STAND;
+			case EAST:
+				PLAYER_E_STAND;
+			case WEST:
+				PLAYER_W_STAND;
+			case _:
+				TK_UNKNOWN;
+		}
+	}
+}

@@ -1,4 +1,4 @@
-package data;
+package data.domain;
 
 import data.domain.World;
 import common.struct.Coordinate;
@@ -7,8 +7,11 @@ import data.domain.prefabs.*;
 
 class PlayerManager {
 	public var entity(default, null): Player;
+
 	public var x(get, null): Float;
+
 	public var y(get, null): Float;
+
 	public var pos(get, null): Coordinate;
 
 	private var world(default, null): World;

@@ -1,6 +1,5 @@
-import data.AnimationResources;
-import data.DebugResources;
 import hxd.Res;
+import data.AnimationResources;
 import core.SettingsManager;
 import core.MainLoop;
 import data.Commands;
@@ -32,7 +31,6 @@ class Main extends hxd.App {
 		ColorPaletteResources.init();
 		TileResources.init();
 		AnimationResources.init();
-		DebugResources.init();
 		Commands.init();
 
 		var window = hxd.Window.getInstance();

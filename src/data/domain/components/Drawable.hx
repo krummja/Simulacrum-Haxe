@@ -19,7 +19,11 @@ abstract class Drawable {
 	public var offsetX(default, set): Float = -8.0;
 	public var offsetY(default, set): Float = -8.0;
 
-	public function new(primary: ColorKey = C_WHITE, secondary: ColorKey = C_CLEAR, layer: RenderLayerType = OBJECT) {
+	public function new(
+		primary: ColorKey = C_WHITE,
+		secondary: ColorKey = C_CLEAR,
+		layer: RenderLayerType = OBJECT,
+	) {
 		this.shader = new SpriteShader2();
 		this.layer = layer;
 		this.primary = primary;

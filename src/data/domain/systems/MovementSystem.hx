@@ -1,11 +1,10 @@
 package data.domain.systems;
 
 import common.util.Easing;
-import echoes.System;
 import echoes.Entity;
+import echoes.System;
 import core.MainLoop;
-import data.domain.components.Position;
-import data.domain.components.Move;
+import data.domain.components.*;
 
 class MovementSystem extends System {
 	@:update private function updatePosition(entity: Entity, position: Position, move: Move): Void {

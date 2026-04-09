@@ -16,11 +16,6 @@ class Position {
 		this.y = y;
 	}
 
-	public function update(x: Float, y: Float) {
-		this.x += x;
-		this.y += y;
-	}
-
 	public function asCoordinate(space: CoordinateSpace = WORLD): Coordinate {
 		return new Coordinate(this.x, this.y, space);
 	}

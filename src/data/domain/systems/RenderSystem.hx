@@ -1,13 +1,12 @@
 package data.domain.systems;
 
-import data.domain.components.SpriteAnim;
+import echoes.System;
+import echoes.Entity;
 import core.Projection;
 import core.MainLoop;
 import data.domain.components.Position;
 import data.domain.components.Sprite;
 import data.domain.components.IsMovable;
-import echoes.System;
-import echoes.Entity;
 
 class RenderSystem extends System {
 	public var loop(get, never): MainLoop;
